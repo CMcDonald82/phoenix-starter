@@ -1,0 +1,37 @@
+version: '3.3'
+
+services:
+  phoenix:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    command: mix phx.server
+    environment:
+      - MIX_ENV=dev
+      - DB_USERNAME
+      - DB_PASSWORD
+      - DB_HOSTNAME
+      - PORT
+      - HOST
+    ports:
+        - "4000:4000"
+        - "8080:8080"
+    volumes:
+      - .:/app
+      # - /app/assets/node_modules # may not need this - trying it out for using webpack-dev-server
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:10
+    volumes: 
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - DB_USERNAME
+      - DB_PASSWORD
+      - DB_HOSTNAME
+
+volumes:
+  db_data: 

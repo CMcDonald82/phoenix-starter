@@ -1,0 +1,26 @@
+# App artifacts
+/_build
+/db
+/deps
+/*.ez
+
+# Generated on crash by the VM
+erl_crash.dump
+
+# Files matching config/*.secret.exs pattern contain sensitive
+# data and you should not commit them into version control.
+#
+# Alternatively, you may comment the line below and commit the
+# secrets files as long as you replace their contents by environment
+# variables.
+/config/*.secret.exs
+
+# Environment variables - these should be set and managed separately on each machine the application is run on
+# NOTE: Probably don't need these anymore since we can use the Ansible role https://github.com/CMcDonald82/ansible-role-environment to copy environment variables to the server
+#/.env
+
+# SSH key (public)
+/config/ssh_key.pub
+
+# Edeliver releases
+/.deliver/releases

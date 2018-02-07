@@ -1,0 +1,32 @@
+{
+  "name": "phoenix-starter",
+  "version": "0.0.1",
+  "description": "Starter project integrating Phoenix, Webpack, React/Redux",
+  "author": "Chris McDonald",
+  "license": "MIT",
+  "scripts": {
+    "watch": "MIX_ENV=dev webpack-dev-server --inline --hot --stdin --colors --host 0.0.0.0 --port 8080 --public 0.0.0.0:8080 --config webpack.dev.js",
+    "deploy": "MIX_ENV=prod webpack -p --config webpack.prod.js",
+    "build": "MIX_ENV=prod webpack -p --config webpack.prod.js"
+  },
+  "dependencies": {
+    "normalize.css": "^7.0.0",
+    "phoenix": "file:../deps/phoenix",
+    "phoenix_html": "file:../deps/phoenix_html"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "copy-webpack-plugin": "^4.2.0",
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.1",
+    "file-loader": "^1.1.5",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.0",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3",
+    "webpack-merge": "^4.1.0"
+  }
+}

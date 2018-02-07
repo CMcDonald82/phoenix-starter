@@ -18,7 +18,7 @@ services:
         - "8080:8080"
     volumes:
       - .:/app
-      # - /app/assets/node_modules # may not need this - trying it out for using webpack-dev-server
+      - node_modules:/app/assets/node_modules # may not need this - trying it out for using webpack-dev-server
     depends_on:
       - postgres
 
@@ -35,3 +35,4 @@ services:
 
 volumes:
   db_data: 
+  node_modules:

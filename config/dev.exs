@@ -50,8 +50,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :phoenix_starter, PhoenixStarter.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: System.get_env("DB_USERNAME"),
+  password: System.get_env("DB_PASSWORD"),
   database: "phoenix_starter_dev",
-  hostname: "localhost",
+  hostname: System.get_env("DB_HOSTNAME"),
   pool_size: 10

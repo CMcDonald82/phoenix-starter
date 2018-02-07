@@ -38,7 +38,8 @@ RUN useradd --system --shell=/bin/bash --create-home builder
 
 # Configure the 'builder' user for public key authentication
 RUN mkdir /home/builder/.ssh/ && chmod 700 /home/builder/.ssh/
-COPY ./config/ssh_key.pub /home/builder/.ssh/authorized_keys
+#COPY ./config/ssh_key.pub /home/builder/.ssh/authorized_keys
+COPY ./ssh_key.pub /home/builder/.ssh/authorized_keys
 RUN chown -R builder /home/builder/
 RUN chgrp -R builder /home/builder/
 RUN chmod 700 /home/builder/.ssh/

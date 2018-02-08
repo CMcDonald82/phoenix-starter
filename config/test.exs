@@ -12,8 +12,8 @@ config :logger, level: :warn
 # Configure your database
 config :phoenix_starter, PhoenixStarter.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: System.get_env("DB_USERNAME"),
+  password: System.get_env("DB_PASSWORD"),
   database: "phoenix_starter_test",
-  hostname: "localhost",
+  hostname: System.get_env("DB_HOSTNAME"),
   pool: Ecto.Adapters.SQL.Sandbox

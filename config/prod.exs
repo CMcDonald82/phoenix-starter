@@ -21,6 +21,9 @@ config :phoenix_starter, PhoenixStarterWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+# Environment config
+config :phoenix_starter, :environment, :prod
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

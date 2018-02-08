@@ -16,6 +16,9 @@ config :phoenix_starter, PhoenixStarterWeb.Endpoint,
     cd: Path.expand("../assets", __DIR__)
   ]]
 
+# Environment config
+config :phoenix_starter, :environment, :dev
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

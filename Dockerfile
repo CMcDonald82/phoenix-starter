@@ -33,7 +33,7 @@ RUN update-locale LANG=$LANG
 # Required for setting up SSHd - (see https://docs.docker.com/engine/examples/running_ssh_service/)
 RUN mkdir /var/run/sshd
 
-# Create 'builder' user
+# Create 'builder' user for building releases with Distillery & Edeliver
 RUN useradd --system --shell=/bin/bash --create-home builder
 
 # Configure the 'builder' user for public key authentication

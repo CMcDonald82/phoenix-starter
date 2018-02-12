@@ -28,6 +28,15 @@ config :logger, level: :info
 # Environment config
 config :phoenix_starter, :environment, :prod
 
+# Configure your database
+config :phoenix_starter, PhoenixStarter.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "${DB_USERNAME}",
+  password: "${DB_PASSWORD}",
+  database: "${DB_NAME}",
+  pool_size: 15
+
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
@@ -69,4 +78,4 @@ config :phoenix, :serve_endpoints, true
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
-import_config "prod.secret.exs"
+# import_config "prod.secret.exs"

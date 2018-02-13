@@ -10,6 +10,7 @@ docker-compose [-f docker-compose.<dev|build|test>.yml ...] <service>
 ```
 
 To build a release:
+* Set the environment variable PHOENIX_STARTER_PROD_HOST to be the domain name you have set up for the server
 
 * Run the container that the build will be performed in
 ```

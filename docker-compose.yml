@@ -11,6 +11,7 @@ services:
       - DB_USERNAME
       - DB_PASSWORD
       - DB_HOSTNAME
+      - PHOENIX_STARTER_PROD_HOST
       - PORT
       - HOST
     ports:

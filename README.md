@@ -5,4 +5,18 @@ NOTE: This project can be run inside a Docker container for development (in whic
 
 To run inside a Docker container, run all commands as the following:
 
+```
 docker-compose [-f docker-compose.<dev|build|test>.yml ...] <service> 
+```
+
+To build a release:
+
+* Run the container that the build will be performed in
+```
+docker-compose -f docker-compose.yml -f docker-compose.build.yml up
+```
+
+* Build the release
+```
+mix edeliver build release --verbose
+```

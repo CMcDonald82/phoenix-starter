@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 AUTO_VERSION=commit-count+git-revision+branch-unless-master
-APP="phoenix-starter"
+APP="phoenix_starter"
 
 BUILD_HOST="localhost"
 BUILD_USER="builder"
-BUILD_AT="/tmp/edeliver/$APP/builds"
+BUILD_AT="/tmp/edeliver/phoenix_starter/builds"
 
 # STAGING_HOSTS="example.com"
 # STAGING_USER="deploy"
@@ -28,7 +28,7 @@ BUILD_AT="/tmp/edeliver/$APP/builds"
 # }
 
 pre_erlang_clean_compile() {
-  status "Installing frontend dependencies"
+  status "Install frontend dependencies"
   __sync_remote "
     [ -f ~/.profile ] && source ~/.profile
     echo $TARGET_MIX_ENV

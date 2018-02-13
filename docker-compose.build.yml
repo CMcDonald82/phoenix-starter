@@ -1,0 +1,7 @@
+version: '3.3'
+
+services:
+  phoenix:
+    command: "/usr/sbin/sshd -D"
+    ports: 
+      - "22:22"

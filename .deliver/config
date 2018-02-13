@@ -1,5 +1,5 @@
 AUTO_VERSION=commit-count+git-revision+branch-unless-master
-APP="phoenix_starter"
+APP="phoenix-starter"
 
 BUILD_HOST="localhost"
 BUILD_USER="builder"

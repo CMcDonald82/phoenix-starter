@@ -24,7 +24,7 @@ services:
       - postgres
 
   postgres:
-    image: postgres:10
+    image: postgres:10.1
     volumes: 
       - db_data:/var/lib/postgresql/data
     ports:

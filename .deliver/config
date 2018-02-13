@@ -5,7 +5,7 @@ APP="phoenix_starter"
 
 BUILD_HOST="localhost"
 BUILD_USER="builder"
-BUILD_AT="/tmp/edeliver/phoenix_starter/builds"
+BUILD_AT="/tmp/edeliver/$APP/builds"
 
 # STAGING_HOSTS="example.com"
 # STAGING_USER="deploy"
@@ -34,7 +34,6 @@ pre_erlang_clean_compile() {
     echo $TARGET_MIX_ENV
     set -e
     cd '$BUILD_AT/assets'
-    echo ${PWD}
 
     APP='$APP' MIX_ENV='$TARGET_MIX_ENV' yarn run build
   "

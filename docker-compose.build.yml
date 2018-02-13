@@ -5,3 +5,9 @@ services:
     command: "/usr/sbin/sshd -D"
     ports: 
       - "22:22"
+    volumes:
+      - .:/app
+      - node_modules:/app/assets/node_modules # may not need this - trying it out for using webpack-dev-server
+
+volumes:
+  node_modules:

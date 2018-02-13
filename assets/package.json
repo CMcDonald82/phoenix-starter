@@ -7,7 +7,7 @@
   "scripts": {
     "watch": "MIX_ENV=dev webpack-dev-server --inline --hot --stdin --colors --host 0.0.0.0 --port 8080 --public 0.0.0.0:8080 --config webpack.dev.js",
     "deploy": "MIX_ENV=prod webpack -p --config webpack.prod.js",
-    "build": "MIX_ENV=prod ./node_modules/.bin/webpack -p --config webpack.prod.js"
+    "build": "MIX_ENV=prod webpack -p --config webpack.prod.js"
   },
   "dependencies": {
     "normalize.css": "^7.0.0",

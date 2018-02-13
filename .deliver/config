@@ -28,7 +28,6 @@ pre_erlang_clean_compile() {
   status "Installing frontend dependencies"
   __sync_remote "
     [ -f ~/.profile ] && source ~/.profile
-    echo $DB_HOSTNAME
     set -e
     cd '$BUILD_AT/assets'
 

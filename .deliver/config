@@ -1,3 +1,4 @@
+AUTO_VERSION=commit-count+git-revision+branch-unless-master
 APP="phoenix_starter"
 
 BUILD_HOST="localhost"

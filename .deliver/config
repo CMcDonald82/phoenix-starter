@@ -31,7 +31,7 @@ pre_erlang_clean_compile() {
   status "Install frontend dependencies"
   __sync_remote "
     [ -f ~/.profile ] && source ~/.profile
-    echo $TARGET_MIX_ENV
+    # echo $TARGET_MIX_ENV
     set -e
     cd '$BUILD_AT/assets'
 

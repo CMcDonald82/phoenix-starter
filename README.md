@@ -9,11 +9,23 @@ NOTE: To run a bash shell into the container:
 docker run -it phoenixstarter_phoenix /bin/bash
 ```
 
-To run inside a Docker container, run all commands as the following:
+NOTE: To run inside a Docker container, run all commands as the following:
 
 ```
 docker-compose [-f docker-compose.<dev|build|test>.yml ...] <service> 
 ```
+
+
+* Clone the repo into a new project directory: (note: may be able to make the APP var in edeliver conf automatically use the name of root dir (here phoenix_starter))
+```
+git clone https://github.com/CMcDonald82/phoenix-starter.git phoenix_starter
+```
+
+* Get mix deps
+```
+docker-compose run phoenix mix deps.get
+```
+
 
 To build a release:
 * Set the environment variable PHOENIX_STARTER_PROD_HOST to be the domain name you have set up for the server

@@ -21,9 +21,24 @@ docker-compose [-f docker-compose.<dev|build|test>.yml ...] <service>
 git clone https://github.com/CMcDonald82/phoenix-starter.git phoenix_starter
 ```
 
+* Add a public key to the project's top-level directory (this key will be used to SSH into the Docker container for building releases)
+```
+cp <path-to-ssh-pubkey-on-local-machine> .
+```
+
+* Build the Docker container
+```
+docker-compose build
+```
+
 * Get mix deps
 ```
 docker-compose run phoenix mix deps.get
+```
+
+* Install frontend dependencies (via yarn) - these will go in ./assets/node_modules
+```
+docker-compose run -w /app/assets phoenix yarn install
 ```
 
 
@@ -33,6 +48,12 @@ To build a release:
 * Run the container that the build will be performed in
 ```
 docker-compose -f docker-compose.yml -f docker-compose.build.yml up
+```
+
+* Add node_modules to local git repo (since these will be needed by edeliver to build the release within the Docker container)
+```
+git add .
+git commit -am 'add /assets/node_modules to local git repo'
 ```
 
 * Build the release

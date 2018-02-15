@@ -36,6 +36,11 @@ docker-compose build
 docker-compose run phoenix mix deps.get
 ```
 
+* Create the database
+```
+docker-compose run phoenix mix ecto.create
+```
+
 * Install frontend dependencies (via yarn) - these will go in ./assets/node_modules
 ```
 docker-compose run -w /app/assets phoenix yarn install

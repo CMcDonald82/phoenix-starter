@@ -11,9 +11,9 @@ BUILD_AT="/tmp/edeliver/$APP/builds"
 # STAGING_USER="deploy"
 # TEST_AT="/home/deploy/staging"
 
-# PRODUCTION_HOSTS="cmacweb1.gq"  #$PHOENIX_STARTER_PROD_HOST # Replace this with the domain name of your server
-# PRODUCTION_USER="deploy"
-# DELIVER_TO="/home/deploy/app_release"
+PRODUCTION_HOSTS="cmacweb1.gq"  #$PHOENIX_STARTER_PROD_HOST # Replace this with the domain name of your server
+PRODUCTION_USER="deploy"
+DELIVER_TO="/home/deploy/app_release"
 
 # For Phoenix projects, symlink prod.secret.exs to tmp source
 # NOTE: Should not need this if not using prod.secret.exs for secrets (we will be using 12-factor app style instead) - put this note in README
@@ -31,7 +31,15 @@ pre_erlang_clean_compile() {
   status "Install frontend dependencies"
   __sync_remote "
     [ -f ~/.profile ] && source ~/.profile
-    # echo $TARGET_MIX_ENV
+    set -e
+    cd '$BUILD_AT/assets'
+
+    APP='$APP' MIX_ENV='$TARGET_MIX_ENV' yarn install
+  "
+
+  status "Build frontend"
+  __sync_remote "
+    [ -f ~/.profile ] && source ~/.profile
     set -e
     cd '$BUILD_AT/assets'
 

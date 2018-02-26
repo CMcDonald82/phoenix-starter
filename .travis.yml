@@ -10,7 +10,7 @@ env:
   - DOCKER_COMPOSE_VERSION=1.19.0
 
 before_install:
-  - docker build -t cmcdonald82/phoenix .
+  - docker-compose build
   - docker ps -a
 
 #   - sudo rm /usr/local/bin/docker-compose

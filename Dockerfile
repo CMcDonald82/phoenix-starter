@@ -41,8 +41,6 @@ RUN mix local.rebar --force
 # Install latest Phoenix (see https://hexdocs.pm/phoenix/installation.html)
 RUN mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez --force
 
-RUN mix deps.get
-
 # Install Node.js (see https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
 RUN \
   apt-get update && \
@@ -62,6 +60,8 @@ RUN \
 RUN mkdir /app
 COPY . /app
 WORKDIR /app
+
+RUN mix deps.get
 
 FROM base
 COPY --from=base /app .

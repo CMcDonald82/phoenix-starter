@@ -30,9 +30,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - DB_USERNAME
-      - DB_PASSWORD
-      - DB_HOSTNAME
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_HOSTNAME=localhost
 
 volumes:
   db_data: 

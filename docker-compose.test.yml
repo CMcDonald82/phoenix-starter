@@ -9,7 +9,7 @@ services:
       - MIX_ENV=test
       - DB_USERNAME=postgres
       - DB_PASSWORD=postgres
-      - DB_HOSTNAME=localhost
+      - DB_HOSTNAME=postgres
     volumes:
       - .:/app
     depends_on:

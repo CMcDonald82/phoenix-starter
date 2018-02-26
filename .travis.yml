@@ -10,6 +10,7 @@ env:
   - DOCKER_COMPOSE_VERSION=1.19.0
 
 before_install:
+  - sudo service postgresql stop
   - docker build --target base -t phoenix_test:latest .
   - docker ps -a
 
@@ -19,4 +20,5 @@ before_install:
 #   - sudo mv docker-compose /usr/local/bin
 
 script:
+  - docker-compose run phoenix mix deps.get
   - docker-compose -f docker-compose.yml -f docker-compose.test.yml run test mix test

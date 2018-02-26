@@ -3,6 +3,8 @@ version: '3.3'
 services:
   test:
     image: phoenix_test
+    ports:
+      - "5433:5433"
     environment:
       - MIX_ENV=test
       - DB_USERNAME=postgres

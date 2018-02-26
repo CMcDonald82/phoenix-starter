@@ -14,7 +14,7 @@ before_install:
   - sudo service postgresql stop
   - docker build --target base -t phoenix_test:latest .
   - docker ps -a
-  - docker run phoenix_test mix deps.get
+  # - docker run phoenix_test mix deps.get
 
 #   - sudo rm /usr/local/bin/docker-compose
 #   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
@@ -24,4 +24,5 @@ before_install:
 script:
   # - docker-compose run phoenix mix deps.get
   - docker-compose -f docker-compose.yml -f docker-compose.test.yml run test mix deps.get
+  
   # - docker-compose -f docker-compose.yml -f docker-compose.test.yml run test bash -c "mix deps.get && mix test"

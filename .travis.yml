@@ -10,7 +10,7 @@ env:
   - DOCKER_COMPOSE_VERSION=1.19.0
 
 before_install:
-  - docker-compose build
+  - docker build --target base -t phoenix_test:latest .
   - docker ps -a
 
 #   - sudo rm /usr/local/bin/docker-compose
@@ -19,4 +19,4 @@ before_install:
 #   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - docker-compose run phoenix mix test
+  - docker-compose -f docker-compose.yml -f docker-compose.test.yml run test mix test

@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:16.04 AS base
 
 # TODO: Move the website links to README.md once we get this Dockerfile working
 
@@ -28,24 +28,6 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 RUN update-locale LANG=$LANG
-
-# Setup SSHd service for use with edeliver
-# Required for setting up SSHd - (see https://docs.docker.com/engine/examples/running_ssh_service/)
-RUN mkdir /var/run/sshd
-
-# Create 'builder' user for building releases with Distillery & Edeliver
-RUN useradd --system --shell=/bin/bash --create-home builder
-
-# Configure the 'builder' user for public key authentication
-RUN mkdir /home/builder/.ssh/ && chmod 700 /home/builder/.ssh/
-COPY ./ssh_key.pub /home/builder/.ssh/authorized_keys
-RUN chown -R builder /home/builder/
-RUN chgrp -R builder /home/builder/
-RUN chmod 700 /home/builder/.ssh/
-RUN chmod 644 /home/builder/.ssh/authorized_keys
-
-# Configure public keys for sshd
-RUN echo "AuthorizedKeysFile  %h/.ssh/authorized_keys" >> /etc/ssh/sshd_config
 
 # NOTE: This is probably not needed if we are transferring environment variables to prod via Ansible role
 # Copy config/prod.secret.exs into /home/builder/ directory so it is available to edeliver
@@ -78,6 +60,27 @@ RUN \
 RUN mkdir /app
 COPY . /app
 WORKDIR /app
+
+FROM base
+COPY --from=base /app .
+
+# Setup SSHd service for use with edeliver
+# Required for setting up SSHd - (see https://docs.docker.com/engine/examples/running_ssh_service/)
+RUN mkdir /var/run/sshd
+
+# Create 'builder' user for building releases with Distillery & Edeliver
+RUN useradd --system --shell=/bin/bash --create-home builder
+
+# Configure the 'builder' user for public key authentication
+RUN mkdir /home/builder/.ssh/ && chmod 700 /home/builder/.ssh/
+COPY ./ssh_key.pub /home/builder/.ssh/authorized_keys
+RUN chown -R builder /home/builder/
+RUN chgrp -R builder /home/builder/
+RUN chmod 700 /home/builder/.ssh/
+RUN chmod 644 /home/builder/.ssh/authorized_keys
+
+# Configure public keys for sshd
+RUN echo "AuthorizedKeysFile  %h/.ssh/authorized_keys" >> /etc/ssh/sshd_config
 
 # These are for SSH - see if this is compatible or whether these need to be in (a possibly separate) docker-compose.yml fiel
 EXPOSE 22

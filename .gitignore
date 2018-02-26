@@ -3,6 +3,7 @@
 #/db
 /deps
 /*.ez
+*.map
 
 # Node modules
 /assets/node_modules/

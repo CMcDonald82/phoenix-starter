@@ -32,7 +32,7 @@ services:
     environment:
       - DB_USERNAME=postgres
       - DB_PASSWORD=postgres
-      - DB_HOSTNAME=localhost
+      - DB_HOSTNAME=postgres
 
 volumes:
   db_data: 

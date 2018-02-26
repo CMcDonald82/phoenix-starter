@@ -1,0 +1,12 @@
+---
+
+# We need sudo so that Docker is installed as a service.
+sudo: required
+
+services: docker
+
+env:
+  - DOCKER_COMPOSE_VERSION=1.19.0
+
+script:
+  - docker-compose run phoenix mix test

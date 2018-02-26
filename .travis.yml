@@ -8,6 +8,7 @@ services:
 
 env:
   - DOCKER_COMPOSE_VERSION=1.19.0
+  - MIX_ENV=test
 
 before_install:
   - sudo service postgresql stop

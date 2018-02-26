@@ -61,7 +61,8 @@ RUN mkdir /app
 COPY . /app
 WORKDIR /app
 
-RUN mix deps.get
+RUN rm -rf _build && \
+  mix deps.get
 
 FROM base
 COPY --from=base /app .

@@ -23,4 +23,4 @@ before_install:
 
 script:
   # - docker-compose run phoenix mix deps.get
-  - docker-compose -f docker-compose.yml -f docker-compose.test.yml run test mix test
+  - docker-compose -f docker-compose.yml -f docker-compose.test.yml run test bash -c "mix deps.get && mix test"

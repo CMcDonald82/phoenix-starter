@@ -1,0 +1,28 @@
+## Name of the node
+-name ${PHOENIX_APP_NAME}@127.0.0.1
+
+## Cookie for distributed erlang
+##-setcookie O(WL9eX>;[osRot>0ak2/M?*:!FSbn(UA3IYS&2x}vQ_s@}8bfxPEN?V,...^ayH
+-setcookie ${COOKIE}
+
+## Heartbeat management; auto-restarts VM if it dies or becomes unresponsive
+## (Disabled by default..use with caution!)
+-heart
+
+## Enable kernel poll and a few async threads
+##+K true
+##+A 5
+
+## Increase number of concurrent ports/sockets
+##-env ERL_MAX_PORTS 4096
+
+## Tweak GC to run more often
+##-env ERL_FULLSWEEP_AFTER 10
+
+## Command to run when heart process tries to reboot
+-env HEART_COMMAND "/home/deploy/app_release/${PHOENIX_APP_NAME}/bin/${PHOENIX_APP_NAME} start"
+
+-env ERL_CRASH_DUMP_SECONDS -1
+
+# Enable SMP automatically based on availability
+-smp auto

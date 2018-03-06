@@ -2,14 +2,12 @@ version: '3.3'
 
 services:
   test:
-    image: phoenix_test
-    # ports:
-    #   - "5433:5433"
+    image: phoenix-base
     environment:
       - MIX_ENV=test
-      - DB_USERNAME=postgres
-      - DB_PASSWORD=postgres
-      - DB_HOSTNAME=postgres
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOSTNAME=${DB_HOSTNAME}
     volumes:
       - .:/app
     depends_on:

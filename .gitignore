@@ -1,6 +1,5 @@
 # App artifacts
 /_build
-#/db
 /deps
 /*.ez
 *.map
@@ -18,10 +17,6 @@ erl_crash.dump
 # secrets files as long as you replace their contents by environment
 # variables.
 /config/*.secret.exs
-
-# Environment variables - these should be set and managed separately on each machine the application is run on
-# NOTE: Probably don't need these anymore since we can use the Ansible role https://github.com/CMcDonald82/ansible-role-environment to copy environment variables to the server
-#/.env
 
 # SSH key (public)
 /ssh_key.pub

@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <title>Hello PhoenixStarter!</title>
-    <%= {:safe, css_link_tag() } %>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
   <body>
@@ -30,6 +30,10 @@
       </main>
 
     </div> <!-- /container -->
-    <%= {:safe, js_script_tag() } %>
+      <%= if Application.get_env(:phoenix_starter, :environment) == :dev do %>
+        <script src="http://localhost:8080/js/app.js"></script>
+      <% else %>
+        <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+      <% end %>
   </body>
 </html>

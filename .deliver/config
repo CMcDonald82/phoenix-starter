@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
 AUTO_VERSION=commit-count+git-revision+branch-unless-master
-APP="phoenix_starter"
+APP=$PHOENIX_APP_NAME
 
 BUILD_HOST="localhost"
 BUILD_USER="builder"
 BUILD_AT="/tmp/edeliver/$APP/builds"
 
-# STAGING_HOSTS="example.com"
-# STAGING_USER="deploy"
-# TEST_AT="/home/deploy/staging"
+STAGING_HOSTS=$PHOENIX_STARTER_STG_HOST
+STAGING_USER="deploy"
+TEST_AT="/home/deploy/staging"
 
-PRODUCTION_HOSTS="cmacweb1.gq"  #$PHOENIX_STARTER_PROD_HOST # Replace this with the domain name of your server
+PRODUCTION_HOSTS=$PHOENIX_STARTER_PROD_HOST  
 PRODUCTION_USER="deploy"
 DELIVER_TO="/home/deploy/app_release"
 
@@ -53,5 +53,12 @@ pre_erlang_clean_compile() {
     cd '$BUILD_AT'
 
     APP='$APP' MIX_ENV='$TARGET_MIX_ENV' $MIX_CMD phx.digest
+  "
+}
+
+post_extract_release_archive() {
+  status "Creating Static Assets Symlink for Release"
+  __sync_remote "
+    ln -sfn $DELIVER_TO/$APP/lib/$APP-$VERSION/priv/static $DELIVER_TO/$APP/static
   "
 }

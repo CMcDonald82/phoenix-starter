@@ -13,7 +13,7 @@ env:
 
 before_install:
   - sudo service postgresql stop
-  - docker build --target base -t phoenix_test:latest .
+  - docker build --target base -t phoenix-base:latest .
   - docker ps -a
 
 script:

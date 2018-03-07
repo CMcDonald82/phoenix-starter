@@ -2,7 +2,6 @@
 -name ${PHOENIX_APP_NAME}@127.0.0.1
 
 ## Cookie for distributed erlang
-##-setcookie O(WL9eX>;[osRot>0ak2/M?*:!FSbn(UA3IYS&2x}vQ_s@}8bfxPEN?V,...^ayH
 -setcookie ${COOKIE}
 
 ## Heartbeat management; auto-restarts VM if it dies or becomes unresponsive

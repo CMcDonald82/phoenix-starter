@@ -3,6 +3,14 @@ A starter Elixir/Phoenix project that can be used as a base to build off of
 
 NOTE: This project can be run inside a Docker container for development (in which case it includes a Postgres database container), for production builds (the container has the same OS (Ubuntu 16.04) as the target server to deploy to so the build can use distillery/edeliver to build a release and deploy it to the server), and for tests.
 
+This project includes the following:
+* Erlang/Elixir (latest)
+* Phoenix (latest)
+* Node.js (v 8.x)
+* React/Redux
+* Webpack
+* PostgreSQL 10
+
 
 ## Useful Commands
 
@@ -30,7 +38,7 @@ git clone https://github.com/CMcDonald82/phoenix-starter.git phoenix_starter
 
 2. Add a public key to the project's top-level directory (this key will be used to SSH into the Docker container for building releases)
 ```
-cp <path-to-ssh-pubkey-on-local-machine> .
+cp <path-to-ssh-pubkey-on-local-machine> ./ssh_key.pub
 ```
 
 3. a.) Build the base Docker container (must be named phoenix_base since the docker-compose files depend on it). This container will be used for local development/debugging and running tests (locally and via Travis)
@@ -43,19 +51,31 @@ docker build --target base -t phoenix-base:latest .
 docker build -t phoenix-build:latest .
 ```
 
-4. Get mix deps
+4. Set local environment variables: 
+  - PHOENIX_APP_NAME: the new name you're giving your project. This env var will be used by the edeliver config and the custom vm.args.prod file (if we decide to include that file in the repo).
+```
+export PHOENIX_APP_NAME="<newname>"
+```
+
+5. Get mix deps
 ```
 docker-compose run phoenix mix deps.get
 ```
 
-* Create the database
-```
-docker-compose run phoenix mix ecto.create
-```
-
-* Install frontend dependencies (via yarn) - these will go in ./assets/node_modules
+6. Install frontend dependencies (via yarn) - these will go in ./assets/node_modules
 ```
 docker-compose run -w /app/assets phoenix yarn install
+```
+
+7. Rename the app
+```
+docker-compose run phoenix mix rename PhoenixStarter <NewName> phoenix_starter <new_name>
+```
+
+8. Create and migrate the database
+```
+docker-compose run phoenix mix ecto.create
+docker-compose run phoenix mix ecto.migrate
 ```
 
 

@@ -11,6 +11,8 @@ This project includes the following:
 * Webpack
 * PostgreSQL 10
 
+NOTE: This is a work in progress so it is not ready to use yet. When it is, you are welcome to (and should!) use this 
+project as a base to get a new Phoenix/React project going!
 
 ## Useful Commands
 

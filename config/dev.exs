@@ -61,3 +61,5 @@ config :phoenix_starter, PhoenixStarter.Repo,
   database: "phoenix_starter_dev",
   hostname: System.get_env("DB_HOSTNAME"),
   pool_size: 10
+
+import_config "setup.exs"

@@ -57,7 +57,7 @@ defmodule Mix.Tasks.Setup do
   end
 
   @doc """
-  Gets the setup config
+  Gets the setup config located in config/setup.exs
   """
   def config do
     Application.get_env(:phoenix_starter, Mix.Tasks.Setup)

@@ -59,7 +59,7 @@ docker build -t phoenix-build:latest .
 export PHOENIX_APP_NAME="<newname>"
 ```
 
-5. Get mix deps
+5. Get mix deps # NOTE: Might want to put this in the setup task
 ```
 docker-compose run phoenix mix deps.get
 ```
@@ -74,7 +74,7 @@ docker-compose run -w /app/assets phoenix yarn install
 docker-compose run phoenix mix rename PhoenixStarter <NewName> phoenix_starter <new_name>
 ```
 
-8. Create and migrate the database
+8. Create and migrate the database # NOTE: Might want to put these in the setup task
 ```
 docker-compose run phoenix mix ecto.create
 docker-compose run phoenix mix ecto.migrate

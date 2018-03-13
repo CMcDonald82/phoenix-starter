@@ -133,28 +133,15 @@ defmodule Mix.Tasks.Setup do
   end
 
   @doc """
-  Removes the original README file that explains how to use this repo to create a new project. Our new project will
-  need a fresh README so we can remove this one and create a new one for our new project.
-
-  NOTE: This function can probably be removed if create_new_readme_new() works
-  """
-  def remove_original_readme do
-    Mix.Shell.IO.info "Removing original README.md file"
-    Mix.Shell.IO.cmd("rm README.md")
-  end
-
-  
-
-  @doc """
   Renames the new README file to README.md
   This will be the fresh new README file for the new project being created.
 
   NOTE: This function can probably be removed if create_new_readme_new() works
   """
-  def create_new_readme do
-    Mix.Shell.IO.info "Creating new README.md file"
-    Mix.Shell.IO.cmd("mv README.new.md README.md")
-  end
+  # def create_new_readme do
+  #   Mix.Shell.IO.info "Creating new README.md file"
+  #   Mix.Shell.IO.cmd("mv README.new.md README.md")
+  # end
 
   @doc """
   This is the new version of create_new_readme which creates a new README file using the name of the new app, then
@@ -163,11 +150,19 @@ defmodule Mix.Tasks.Setup do
   """
   defp create_new_readme_new do
     Mix.Shell.IO.info "Creating new README.md file based on old one"
+    
     header = """
     # #{config()[:name]}
     """
-    new_readme = File.open!("README.md", [:write])
+    
+    File.open!("README.md", [:write])
     |> IO.write(header)
+    |> File.close
+
+    File.stream!("README.new.md")
+    |> Stream.into(File.stream!("README.md", [:append]))
+    |> Stream.run
+
   end
 
   @doc """

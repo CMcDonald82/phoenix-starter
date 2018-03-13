@@ -5,7 +5,7 @@ services:
     image: phoenix-build
     command: "/usr/sbin/sshd -D"
     environment:
-      - PHOENIX_STARTER_PROD_HOST=${PHOENIX_STARTER_PROD_HOST}
+      - PHOENIX_STARTER_PROD_HOST=${PHOENIX_STARTER_PROD_HOST} # can this be removed? may only be needed for deploying the release (which is done outside the container the release is built in)
     ports: 
       - "22:22"
     

@@ -41,7 +41,7 @@ defmodule SetupTest do
       |> String.split(" ")
       |> Enum.reject(&(&1 == ""))
       |> Enum.at(1)
-      :os.cmd("kill -9 #{pid}")
+      :os.cmd('kill -9 #{pid}')
     end)
   end
 

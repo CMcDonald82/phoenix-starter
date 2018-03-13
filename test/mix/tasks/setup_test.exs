@@ -11,7 +11,7 @@ defmodule SetupTest do
     Mix.Shell.IO.cmd("rm -rf #{@app_dir}")
     git_clone_starter()
     File.cd!(@app_dir)
-    Mix.Shell.IO.cmd("mix deps.get")
+    # Mix.Shell.IO.cmd("mix deps.get")
     Mix.Shell.IO.cmd("mix setup #{@app_name} #{@app_dir}")
     start_server()
     :timer.sleep(10000)

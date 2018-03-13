@@ -35,7 +35,7 @@ defmodule Mix.Tasks.Setup do
   """
   def run([]) do
     run([
-      config()[:name]
+      config()[:name],
       config()[:otp_name]
     ])
   end
@@ -226,5 +226,7 @@ defmodule Mix.Tasks.Setup do
   rescue
     _ -> {:error, "Failed to reinitialize git"}
   end
+
+  
 
 end

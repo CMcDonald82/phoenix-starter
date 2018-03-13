@@ -12,7 +12,7 @@ defmodule SetupTest do
     git_clone_starter()
     File.cd!(@app_dir)
     :os.cmd('mix deps.get')
-    :os.cmd('mix compile')
+    # :os.cmd('mix compile')
     :os.cmd('mix setup #{@app_name} #{@app_dir}')
     start_server()
     :timer.sleep(10000)

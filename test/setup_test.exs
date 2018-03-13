@@ -8,7 +8,7 @@ defmodule SetupTest do
   @tag timeout: :infinity
   test "sets up app with default config" do
     File.cd!("..")
-    :os.cmd("rm -rf #{@app_dir}")
+    :os.cmd('rm -rf #{@app_dir}')
     git_clone_starter()
     File.cd!(@app_dir)
     :os.cmd("mix deps.get")

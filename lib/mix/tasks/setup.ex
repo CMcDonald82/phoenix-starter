@@ -207,10 +207,10 @@ defmodule Mix.Tasks.Setup do
   Optionally reinitialize git in the repo of the new project that is created.
   This is useful if you want your new project to be a 'blank slate' that does not include any commits from this
   repo.
-  This will be run if the :git_reset variable is set to true in config/setup.exs
+  This will be run if the :git_reinit variable is set to true in config/setup.exs
   """
   def git_reinit do
-    unless config()[:git_reset] do
+    unless config()[:git_reinit] do
       Mix.Shell.IO.info "Skipping git_reinit"
     else
       Mix.Shell.IO.info "Reinitializing git"

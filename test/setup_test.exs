@@ -8,11 +8,12 @@ defmodule SetupTest do
   @tag timeout: :infinity
   test "sets up app with default config" do
     File.cd!("..")
-    Mix.Shell.IO.cmd("rm -rf #{@app_dir}")
+    :os.cmd("rm -rf #{@app_dir}")
     git_clone_starter()
     File.cd!(@app_dir)
-    Mix.Shell.IO.cmd("mix deps.get")
-    Mix.Shell.IO.cmd("mix setup #{@app_name} #{@app_dir}")
+    :os.cmd("mix deps.get")
+    :os.cmd('mix compile')
+    :os.cmd("mix setup #{@app_name} #{@app_dir}")
     start_server()
     :timer.sleep(10000)
     # {page, 0} = System.cmd("curl", ["localhost:4000"])

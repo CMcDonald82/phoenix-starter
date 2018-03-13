@@ -21,7 +21,7 @@ defmodule SetupTest do
   end
 
   defp git_clone_starter do
-    :os.cmd('git clone #{git_repo} #{@app_dir}')
+    :os.cmd('git clone #{@git_repo} #{@app_dir}')
   end
 
   defp start_server do

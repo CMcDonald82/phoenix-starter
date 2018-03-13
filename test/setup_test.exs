@@ -16,8 +16,8 @@ defmodule SetupTest do
     :os.cmd('mix setup #{@app_name} #{@app_dir}')
     start_server()
     :timer.sleep(10000)
-    # {page, 0} = System.cmd("curl", ["localhost:4000"])
-    # assert page |> String.contains?("Hello #{@app_name}!")
+    {page, 0} = System.cmd("curl", ["localhost:4000"])
+    assert page |> String.contains?("Hello #{@app_name}!")
     kill_server()
   end
 

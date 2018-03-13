@@ -10,19 +10,18 @@ defmodule Mix.Tasks.Setup do
   
   """
   def run([name, otp_name]) do
-    # with :ok <- rename_app(name, otp_name),
-    #      :ok <- remove_rename_dep(),
-    #      # :ok <- yarn_init() # Run yarn install here?
-    #      :ok <- remove_mix_task(),
-    #      :ok <- remove_setup_config(),
-    #      :ok <- remove_setup_test(),
-    #      :ok <- remove_original_readme(),
-    #      :ok <- remove_original_travis_yml(), # Do we need this? Or just keep the travis file that we already have? UPDATE: We need to copy the new travis file. May be able to just use mv with the -f flag so we don't need to first remove the old .travis file
-    #      :ok <- create_new_readme(),
-    #      :ok <- create_new_travis_yml(),
-    #      :ok <- git_reinit() do  
-    #   :ok
-    create_new_readme_new()
+    with :ok <- rename_app(name, otp_name),
+         :ok <- remove_rename_dep(),
+         # :ok <- yarn_init() # Run yarn install here?
+         :ok <- remove_mix_task(),
+         :ok <- remove_setup_config(),
+         :ok <- remove_setup_test(),
+         :ok <- create_new_travis_yml(),
+         :ok <- create_new_readme(),
+         :ok <- remove_readme_template(),
+         # :ok <- remove_original_travis_yml(), # Do we need this? Or just keep the travis file that we already have? UPDATE: We need to copy the new travis file. May be able to just use mv with the -f flag so we don't need to first remove the old .travis file
+         :ok <- git_reinit() do  
+      :ok
     end
     |> case do
       :ok -> print_conclusion_message()
@@ -148,8 +147,8 @@ defmodule Mix.Tasks.Setup do
   writes the contents of the README.new.md file to the new README file (these are basically the instructions on how 
   to run the app (build Docker containers, run commands within them, build/deploy releases, etc))
   """
-  defp create_new_readme_new do
-    Mix.Shell.IO.info "Creating new README.md file based on old one"
+  def create_new_readme do
+    Mix.Shell.IO.info "Creating new README.md file"
     
     header = """
     # #{config()[:name]}
@@ -159,10 +158,22 @@ defmodule Mix.Tasks.Setup do
     |> IO.write(header)
     |> File.close
 
-    File.stream!("README.new.md")
+    File.stream!("README.tmp.md")
     |> Stream.into(File.stream!("README.md", [:append]))
     |> Stream.run
 
+  end
+
+  @doc """
+  Removes README.tmp.md (the template for the new README.md file), since that template is for generating the 
+  README file for the new project (done in the create_new_readme/0 function)
+  """
+  def remove_readme_template do
+    Mix.Shell.IO.info "Removing README.tmp.md file"
+    File.rm!("README.tmp.md")
+    :ok
+  rescue
+    _ -> {:error, "Failed to remove README.tmp.md"}
   end
 
   @doc """
@@ -173,10 +184,10 @@ defmodule Mix.Tasks.Setup do
   NOTE: This function can probably be removed if we can use the File.mv function to just directly overwrite the 
   original .travis.yml with the .travis.new.yml file
   """
-  def remove_original_travis_yml do
-    Mix.Shell.IO.info "Removing original .travis.yml file"
-    Mix.Shell.IO.cmd("rm .travis.yml") 
-  end
+  # def remove_original_travis_yml do
+  #   Mix.Shell.IO.info "Removing original .travis.yml file"
+  #   Mix.Shell.IO.cmd("rm .travis.yml") 
+  # end
 
   @doc """
   Renames the new .travis file to .travis.yml
@@ -184,7 +195,12 @@ defmodule Mix.Tasks.Setup do
   """
   def create_new_travis_yml do
     Mix.Shell.IO.info "Creating new .travis.yml file" 
-    Mix.Shell.IO.cmd("mv .travis.new.yml .travis.yml") 
+    # Mix.Shell.IO.cmd("mv .travis.new.yml .travis.yml") 
+    renamed = File.rename(".travis.new.yml", ".travis.yml")
+    case renamed do
+      {:ok} -> :ok
+      {:error, reason} -> IO.puts "Failed to rename .travis.new.yml: #{reason}"
+    end
   end
 
   @doc """

@@ -227,6 +227,16 @@ defmodule Mix.Tasks.Setup do
     _ -> {:error, "Failed to reinitialize git"}
   end
 
-  
+  defp print_conclusion_message do
+    Mix.Shell.IO.info """
+    Your app has been setup!
+
+    Check out the instructions for running, building and deploying in the new README.md file
+    """
+  end
+
+  defp print_error_message(error) do
+    Mix.Shell.IO.error(error)
+  end
 
 end

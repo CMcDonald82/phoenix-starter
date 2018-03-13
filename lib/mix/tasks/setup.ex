@@ -10,18 +10,19 @@ defmodule Mix.Tasks.Setup do
   
   """
   def run([name, otp_name]) do
-    with :ok <- rename_app(name, otp_name),
-         :ok <- remove_rename_dep(),
-         # :ok <- yarn_init() # Run yarn install here?
-         :ok <- remove_mix_task(),
-         :ok <- remove_setup_config(),
-         :ok <- remove_setup_test(),
-         :ok <- remove_original_readme(),
-         :ok <- remove_original_travis_yml(), # Do we need this? Or just keep the travis file that we already have? UPDATE: We need to copy the new travis file. May be able to just use mv with the -f flag so we don't need to first remove the old .travis file
-         :ok <- create_new_readme(),
-         :ok <- create_new_travis_yml(),
-         :ok <- git_reinit() do  
-      :ok
+    # with :ok <- rename_app(name, otp_name),
+    #      :ok <- remove_rename_dep(),
+    #      # :ok <- yarn_init() # Run yarn install here?
+    #      :ok <- remove_mix_task(),
+    #      :ok <- remove_setup_config(),
+    #      :ok <- remove_setup_test(),
+    #      :ok <- remove_original_readme(),
+    #      :ok <- remove_original_travis_yml(), # Do we need this? Or just keep the travis file that we already have? UPDATE: We need to copy the new travis file. May be able to just use mv with the -f flag so we don't need to first remove the old .travis file
+    #      :ok <- create_new_readme(),
+    #      :ok <- create_new_travis_yml(),
+    #      :ok <- git_reinit() do  
+    #   :ok
+    create_new_readme_new()
     end
     |> case do
       :ok -> print_conclusion_message()
@@ -134,29 +135,52 @@ defmodule Mix.Tasks.Setup do
   @doc """
   Removes the original README file that explains how to use this repo to create a new project. Our new project will
   need a fresh README so we can remove this one and create a new one for our new project.
+
+  NOTE: This function can probably be removed if create_new_readme_new() works
   """
   def remove_original_readme do
     Mix.Shell.IO.info "Removing original README.md file"
     Mix.Shell.IO.cmd("rm README.md")
   end
 
-  @doc """
-  Removes the .travis.yml for this setup task. This will help keep the new project clean. Since the .travis.yml file 
-  that is being removed just runs the test for the setup task (which is being removed), it is not necessary in the 
-  newly created project and a new .travis.yml file will be created for that project
-  """
-  def remove_original_travis_yml do
-    Mix.Shell.IO.info "Removing original .travis.yml file"
-    Mix.Shell.IO.cmd("rm .travis.yml") 
-  end
+  
 
   @doc """
   Renames the new README file to README.md
   This will be the fresh new README file for the new project being created.
+
+  NOTE: This function can probably be removed if create_new_readme_new() works
   """
   def create_new_readme do
     Mix.Shell.IO.info "Creating new README.md file"
     Mix.Shell.IO.cmd("mv README.new.md README.md")
+  end
+
+  @doc """
+  This is the new version of create_new_readme which creates a new README file using the name of the new app, then
+  writes the contents of the README.new.md file to the new README file (these are basically the instructions on how 
+  to run the app (build Docker containers, run commands within them, build/deploy releases, etc))
+  """
+  defp create_new_readme_new do
+    Mix.Shell.IO.info "Creating new README.md file based on old one"
+    header = """
+    # #{config()[:name]}
+    """
+    new_readme = File.open!("README.md", [:write])
+    |> IO.write(header)
+  end
+
+  @doc """
+  Removes the .travis.yml for this setup task. This will help keep the new project clean. Since the .travis.yml file 
+  that is being removed just runs the test for the setup task (which is being removed), it is not necessary in the 
+  newly created project and a new .travis.yml file will be created for that project
+
+  NOTE: This function can probably be removed if we can use the File.mv function to just directly overwrite the 
+  original .travis.yml with the .travis.new.yml file
+  """
+  def remove_original_travis_yml do
+    Mix.Shell.IO.info "Removing original .travis.yml file"
+    Mix.Shell.IO.cmd("rm .travis.yml") 
   end
 
   @doc """

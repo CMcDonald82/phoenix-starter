@@ -1,24 +1,5 @@
 ---
 
-# language: elixir
-# env:
-#   - DB_USERNAME=postgres
-#     DB_PASSWORD=postgres
-#     DB_HOSTNAME=postgres
-
-# elixir:
-#   - 1.4.1
-# otp_release:
-#   - 18.2.1
-# services:
-#   - postgresql
-# cache:
-#   directories:
-#     - _build
-#     - deps
-# script:
-#   - mix test
-
 # We need sudo so that Docker is installed as a service.
 sudo: required
 

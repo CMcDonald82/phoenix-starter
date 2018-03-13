@@ -16,9 +16,11 @@ defmodule Mix.Tasks.Setup do
          :ok <- remove_mix_task(),
          :ok <- remove_setup_config(),
          :ok <- remove_setup_test(),
-         :ok <- remove_travis_yml(), # Do we need this? Or just keep the travis file that we already have?
-         :ok <- create_readme(),
-         :ok <- git_init() do  
+         :ok <- remove_original_readme(),
+         :ok <- remove_original_travis_yml(), # Do we need this? Or just keep the travis file that we already have? UPDATE: We need to copy the new travis file. May be able to just use mv with the -f flag so we don't need to first remove the old .travis file
+         :ok <- create_new_readme(),
+         :ok <- create_new_travis_yml(),
+         :ok <- git_reinit() do  
       :ok
     end
     |> case do
@@ -116,5 +118,78 @@ defmodule Mix.Tasks.Setup do
     _ -> {:error, "Failed to remove setup config import"}
   end
 
-  
+  @doc """
+  Removes the test file for the setup mix task since this test will not need to be run in the newly created project.
+  This test is already run as part of this repo so it does not need to be included in the projects that are created
+  using this repo as a base. Removing this test helps keep the repo of the newly created project clean.
+  """
+  def remove_setup_test do
+    Mix.Shell.IO.info "Removing setup test file"
+    Mix.Shell.IO.cmd("rm -rf test/setup_test.exs")
+    :ok
+  rescue
+    _ -> {:error, "Failed to remove setup test"}
+  end
+
+  @doc """
+  Removes the original README file that explains how to use this repo to create a new project. Our new project will
+  need a fresh README so we can remove this one and create a new one for our new project.
+  """
+  def remove_original_readme do
+    Mix.Shell.IO.info "Removing original README.md file"
+    Mix.Shell.IO.cmd("rm README.md")
+  end
+
+  @doc """
+  Removes the .travis.yml for this setup task. This will help keep the new project clean. Since the .travis.yml file 
+  that is being removed just runs the test for the setup task (which is being removed), it is not necessary in the 
+  newly created project and a new .travis.yml file will be created for that project
+  """
+  def remove_original_travis_yml do
+    Mix.Shell.IO.info "Removing original .travis.yml file"
+    Mix.Shell.IO.cmd("rm .travis.yml") 
+  end
+
+  @doc """
+  Renames the new README file to README.md
+  This will be the fresh new README file for the new project being created.
+  """
+  def create_new_readme do
+    Mix.Shell.IO.info "Creating new README.md file"
+    Mix.Shell.IO.cmd("mv README.new.md README.md")
+  end
+
+  @doc """
+  Renames the new .travis file to .travis.yml
+  This will be the fresh new travis file for the new project being created.
+  """
+  def create_new_travis_yml do
+    Mix.Shell.IO.info "Creating new .travis.yml file" 
+    Mix.Shell.IO.cmd("mv .travis.new.yml .travis.yml") 
+  end
+
+  @doc """
+  Optionally reinitialize git in the repo of the new project that is created.
+  This is useful if you want your new project to be a 'blank slate' that does not include any commits from this
+  repo.
+  This will be run if the :git_reset variable is set to true in config/setup.exs
+  """
+  def git_reinit do
+    unless config()[:git_reset] do
+      Mix.Shell.IO.info "Skipping git_reinit"
+    else
+      Mix.Shell.IO.info "Reinitializing git"
+      [
+        "rm -rf .git",
+        "git init",
+        "git add -A",
+        "git commit -m 'init - first commit'",
+      ]
+      |> Enum.each(&Mix.Shell.IO.cmd/1)
+    end
+    :ok
+  rescue
+    _ -> {:error, "Failed to reinitialize git"}
+  end
+
 end

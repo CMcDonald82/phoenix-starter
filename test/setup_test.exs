@@ -28,6 +28,7 @@ defmodule SetupTest do
 
   defp git_clone_starter do
     :os.cmd('git clone #{@git_repo} #{@app_dir}')
+    :os.cmd('git checkout add_setup_task')
   end
 
   defp check_app_renamed do

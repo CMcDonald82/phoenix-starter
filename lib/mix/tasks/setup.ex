@@ -17,8 +17,8 @@ defmodule Mix.Tasks.Setup do
          :ok <- create_new_readme(),
          :ok <- remove_readme_template(),
          :ok <- remove_setup_config(),
-         :ok <- remove_setup_test(),
          :ok <- remove_mix_task(),
+         :ok <- remove_setup_test(),
          # :ok <- remove_original_travis_yml(), # Do we need this? Or just keep the travis file that we already have? UPDATE: We need to copy the new travis file. May be able to just use mv with the -f flag so we don't need to first remove the old .travis file
          :ok <- git_reinit() do  
       :ok

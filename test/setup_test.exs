@@ -20,11 +20,14 @@ defmodule SetupTest do
     :os.cmd('mix setup #{@app_name} #{@app_dir}')
     assert check_app_renamed()
     refute check_rename_dep_exists()
-    refute File.exists?("lib/mix/tasks/setup.ex")
-    refute File.exists?("config/setup.exs")
     assert check_new_travis_file()
     assert check_new_readme_file()
     refute File.exists?("README.tmp.md")
+    refute File.exists?("config/setup.exs")
+    refute File.exists?("lib/mix/tasks/setup.ex")
+    
+    
+    
     
 
     # NOTE: Not needed anymore

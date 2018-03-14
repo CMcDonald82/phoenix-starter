@@ -16,6 +16,7 @@ defmodule SetupTest do
     :os.cmd('mix deps.get')
     # :os.cmd('mix compile')
     :os.cmd('mix setup #{@app_name} #{@app_dir}')
+    refute File.exists?("lib/mix/tasks/setup.ex")
     assert check_app_renamed()
     # start_server()
     # :timer.sleep(10000)
@@ -30,11 +31,12 @@ defmodule SetupTest do
   end
 
   defp check_app_renamed do
-    File.read!("#{@app_dir}/mix.exs")
+    File.read!("lib/mix/tasks/setup.ex")
     |> String.split("\n")
     |> IO.inspect
     |> Enum.member?(@app_name)
   end
+
 
   # defp start_server do
   #   spawn fn ->

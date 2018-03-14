@@ -162,7 +162,8 @@ defmodule Mix.Tasks.Setup do
     File.stream!("README.tmp.md")
     |> Stream.into(File.stream!("README.md", [:append]))
     |> Stream.run
-
+    # maybe try File.close here?
+    |> File.close
   end
 
   @doc """

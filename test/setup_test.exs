@@ -49,7 +49,6 @@ defmodule SetupTest do
 
   defp check_app_renamed do
     read_file_lines("mix.exs")
-    |> IO.inspect
     |> Enum.any?(&(&1 |> String.contains?(@app_name)))
   end
 

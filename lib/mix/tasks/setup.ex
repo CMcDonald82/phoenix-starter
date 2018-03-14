@@ -107,12 +107,15 @@ defmodule Mix.Tasks.Setup do
   """
   defp remove_setup_config do
     Mix.Shell.IO.info "Removing setup config file"
-    Mix.Shell.IO.cmd("rm -rf config/setup.exs")
+    # Mix.Shell.IO.cmd("rm -rf config/setup.exs")
+    File.rm!("config/setup.exs")
+    
     with_import_config_removed = "config/dev.exs"
     |> File.read!
     |> String.split("\n")
     |> Enum.reject(&(&1 |> String.contains?("setup.exs")))
     |> Enum.join("\n")
+
     File.write!("config/dev.exs", with_import_config_removed)
   rescue
     _ -> {:error, "Failed to remove setup config import"}
@@ -170,7 +173,7 @@ defmodule Mix.Tasks.Setup do
   """
   def remove_readme_template do
     Mix.Shell.IO.info "Removing README.tmp.md file"
-    File.rm_rf!("README.tmp.md")
+    File.rm!("README.tmp.md")
     # Mix.Shell.IO.cmd("rm -rf README.tmp.md")
     :ok
   rescue

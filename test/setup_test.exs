@@ -15,14 +15,14 @@ defmodule SetupTest do
     File.cd!(@app_dir)
 
     git_checkout_branch() # remove when branch is merged into master
-    
+
     :os.cmd('mix deps.get')
     :os.cmd('mix setup #{@app_name} #{@app_dir}')
     assert check_app_renamed()
     refute check_rename_dep_exists()
     assert check_new_travis_file()
     assert check_new_readme_file()
-    refute File.exists?("README.tmp.md")
+    refute File.exists?("#{@app_dir}/README.tmp.md")
     refute File.exists?("config/setup.exs")
     refute File.exists?("lib/mix/tasks/setup.ex")
     

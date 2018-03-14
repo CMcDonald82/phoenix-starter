@@ -24,7 +24,7 @@ defmodule SetupTest do
     refute File.exists?("config/setup.exs")
     assert check_new_travis_file()
     assert check_new_readme_file()
-    # refute File.exists?("README.tmp.md")
+    refute File.exists?("README.tmp.md")
     
 
     # NOTE: Not needed anymore
@@ -48,8 +48,7 @@ defmodule SetupTest do
   end
 
   defp check_app_renamed do
-    File.read!("mix.exs")
-    |> String.split("\n")
+    read_file_lines("mix.exs")
     |> IO.inspect
     |> Enum.any?(&(&1 |> String.contains?(@app_name)))
   end

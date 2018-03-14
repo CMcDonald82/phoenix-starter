@@ -172,7 +172,8 @@ defmodule Mix.Tasks.Setup do
   """
   def remove_readme_template do
     Mix.Shell.IO.info "Removing README.tmp.md file"
-    File.rm!("README.tmp.md")
+    #File.rm!("README.tmp.md")
+    Mix.Shell.IO.cmd("rm -rf README.tmp.md")
     :ok
   rescue
     _ -> {:error, "Failed to remove README.tmp.md"}

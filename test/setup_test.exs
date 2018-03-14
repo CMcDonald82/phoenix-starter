@@ -37,7 +37,7 @@ defmodule SetupTest do
     File.read!("mix.exs")
     |> String.split("\n")
     |> IO.inspect
-    |> Enum.member?(@app_name)
+    |> Enum.any?(&(&1 |> String.contains?(@app_name)))
   end
 
 

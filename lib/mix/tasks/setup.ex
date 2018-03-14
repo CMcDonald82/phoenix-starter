@@ -95,7 +95,8 @@ defmodule Mix.Tasks.Setup do
   """
   defp remove_mix_task do
     Mix.Shell.IO.info "Removing this mix task (since it is no longer needed once the new project has been setup)"
-    Mix.Shell.IO.cmd("rm -rf lib/mix")
+    # Mix.Shell.IO.cmd("rm -rf lib/mix")
+    File.rm_rf!("lib/mix")
     :ok
   rescue
     _ -> {:error, "Failed to remove mix task"}
@@ -109,7 +110,7 @@ defmodule Mix.Tasks.Setup do
     Mix.Shell.IO.info "Removing setup config file"
     # Mix.Shell.IO.cmd("rm -rf config/setup.exs")
     File.rm!("config/setup.exs")
-    
+
     with_import_config_removed = "config/dev.exs"
     |> File.read!
     |> String.split("\n")
@@ -128,8 +129,8 @@ defmodule Mix.Tasks.Setup do
   """
   def remove_setup_test do
     Mix.Shell.IO.info "Removing setup test file"
-    Mix.Shell.IO.cmd("rm -rf test/setup_test.exs")
-    # File.rm!("test/setup_test.exs")
+    # Mix.Shell.IO.cmd("rm -rf test/setup_test.exs")
+    File.rm!("test/setup_test.exs")
     :ok
   rescue
     _ -> {:error, "Failed to remove setup test"}

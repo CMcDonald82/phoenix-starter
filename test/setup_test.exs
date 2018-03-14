@@ -31,6 +31,7 @@ defmodule SetupTest do
 
   defp check_app_renamed do
     File.read!("mix.exs")
+    |> String.split("\n")
     |> Enum.member?(@app_name)
   end
 

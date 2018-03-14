@@ -13,14 +13,18 @@ defmodule SetupTest do
     :os.cmd('rm -rf #{@app_dir}')
     git_clone_starter()
     File.cd!(@app_dir)
+    # Can remove these git commands once we merge the add_setup_task branch into master
     :os.cmd('git fetch')
     :os.cmd('git branch')
     :os.cmd('git checkout add_setup_task')
     :os.cmd('mix deps.get')
     # :os.cmd('mix compile')
     :os.cmd('mix setup #{@app_name} #{@app_dir}')
-    refute File.exists?("lib/mix/tasks/setup.ex")
     assert check_app_renamed()
+    refute check_rename_dep_exists()
+    refute File.exists?("lib/mix/tasks/setup.ex")
+    
+    
     # start_server()
     # :timer.sleep(10000)
     # :os.cmd('curl http://localhost:4000')
@@ -38,6 +42,16 @@ defmodule SetupTest do
     |> String.split("\n")
     |> IO.inspect
     |> Enum.any?(&(&1 |> String.contains?(@app_name)))
+  end
+
+  defp check_rename_dep_exists do
+    read_file_lines("mix.exs")
+    |> Enum.any?(&(&1 |> String.contains?(":rename")))
+  end
+
+  defp read_file_lines(path) do
+    File.read!(path)
+    |> String.split("\n")
   end
 
 

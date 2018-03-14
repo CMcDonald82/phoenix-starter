@@ -13,6 +13,9 @@ defmodule SetupTest do
     :os.cmd('rm -rf #{@app_dir}')
     git_clone_starter()
     File.cd!(@app_dir)
+    :os.cmd('git fetch')
+    :os.cmd('git branch')
+    :os.cmd('git checkout add_setup_task')
     :os.cmd('mix deps.get')
     # :os.cmd('mix compile')
     :os.cmd('mix setup #{@app_name} #{@app_dir}')
@@ -28,9 +31,6 @@ defmodule SetupTest do
 
   defp git_clone_starter do
     :os.cmd('git clone #{@git_repo} #{@app_dir}')
-    :os.cmd('git fetch')
-    :os.cmd('git branch')
-    :os.cmd('git checkout add_setup_task')
   end
 
   defp check_app_renamed do

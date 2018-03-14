@@ -81,11 +81,13 @@ defmodule Mix.Tasks.Setup do
   """
   defp remove_rename_dep do
     Mix.Shell.IO.info "Removing rename dependency"
+
     with_rename_dep_removed = "mix.exs"
     |> File.read!
     |> String.split("\n")
     |> Enum.reject(&(&1 |> String.contains?(":rename")))
     |> Enum.join("\n")
+    
     File.write!("mix.exs", with_rename_dep_removed)
   end
 

@@ -13,12 +13,10 @@ defmodule SetupTest do
     :os.cmd('rm -rf #{@app_dir}')
     git_clone_starter()
     File.cd!(@app_dir)
-    # Can remove these git commands once we merge the add_setup_task branch into master
-    :os.cmd('git fetch')
-    :os.cmd('git branch')
-    :os.cmd('git checkout add_setup_task')
+
+    git_checkout_branch() # remove when branch is merged into master
+    
     :os.cmd('mix deps.get')
-    # :os.cmd('mix compile')
     :os.cmd('mix setup #{@app_name} #{@app_dir}')
     assert check_app_renamed()
     refute check_rename_dep_exists()
@@ -26,7 +24,10 @@ defmodule SetupTest do
     refute File.exists?("config/setup.exs")
     assert check_new_travis_file()
     assert check_new_readme_file()
-    refute File.exists?("README.tmp.md")
+    # refute File.exists?("README.tmp.md")
+    
+
+    # NOTE: Not needed anymore
     # start_server()
     # :timer.sleep(10000)
     # :os.cmd('curl http://localhost:4000')
@@ -37,6 +38,13 @@ defmodule SetupTest do
 
   defp git_clone_starter do
     :os.cmd('git clone #{@git_repo} #{@app_dir}')
+  end
+
+  # NOTE: Can remove these git commands once we merge the add_setup_task branch into master
+  defp git_checkout_branch do
+    :os.cmd('git fetch')
+    :os.cmd('git branch')
+    :os.cmd('git checkout add_setup_task')
   end
 
   defp check_app_renamed do

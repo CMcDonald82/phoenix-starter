@@ -16,7 +16,7 @@ defmodule SetupTest do
     :os.cmd('mix deps.get')
     # :os.cmd('mix compile')
     :os.cmd('mix setup #{@app_name} #{@app_dir}')
-    assert check_app_renamed(name)
+    assert check_app_renamed()
     # start_server()
     # :timer.sleep(10000)
     # :os.cmd('curl http://localhost:4000')
@@ -29,8 +29,8 @@ defmodule SetupTest do
     :os.cmd('git clone #{@git_repo} #{@app_dir}')
   end
 
-  defp check_app_renamed(name) do
-    renamed = File.read!("mix.exs")
+  defp check_app_renamed do
+    File.read!("mix.exs")
     |> Enum.member?(@app_name)
   end
 

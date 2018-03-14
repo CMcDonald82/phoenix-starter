@@ -125,7 +125,8 @@ defmodule Mix.Tasks.Setup do
   """
   def remove_setup_test do
     Mix.Shell.IO.info "Removing setup test file"
-    Mix.Shell.IO.cmd("rm -rf test/setup_test.exs")
+    # Mix.Shell.IO.cmd("rm -rf test/setup_test.exs")
+    File.rm!("test/setup_test.exs")
     :ok
   rescue
     _ -> {:error, "Failed to remove setup test"}

@@ -23,8 +23,10 @@ defmodule SetupTest do
     assert check_app_renamed()
     refute check_rename_dep_exists()
     refute File.exists?("lib/mix/tasks/setup.ex")
-    
-    
+    refute File.exists?("config/setup.exs")
+    assert check_new_travis_file()
+    assert check_new_readme_file()
+    refute File.exists?("README.tmp.md")
     # start_server()
     # :timer.sleep(10000)
     # :os.cmd('curl http://localhost:4000')
@@ -47,6 +49,16 @@ defmodule SetupTest do
   defp check_rename_dep_exists do
     read_file_lines("mix.exs")
     |> Enum.any?(&(&1 |> String.contains?(":rename")))
+  end
+
+  defp check_new_travis_file do
+    read_file_lines(".travis.yml")
+    |> Enum.any?(&(&1 |> String.contains?("test yarn")))
+  end
+
+  defp check_new_readme_file do
+    read_file_lines("README.md")
+    |> Enum.any?(&(&1 |> String.contains?(@app_name)))
   end
 
   defp read_file_lines(path) do

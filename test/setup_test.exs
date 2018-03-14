@@ -23,7 +23,7 @@ defmodule SetupTest do
     assert check_new_travis_file()
     assert check_new_readme_file()
     refute File.exists?("#{@app_dir}/README.tmp.md")
-    refute File.exists?("config/setup.exs")
+    refute File.exists?("#{@app_dir}/config/setup.exs")
     refute File.exists?("lib/mix/tasks/setup.ex")
     
     

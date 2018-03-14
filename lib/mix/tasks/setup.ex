@@ -16,7 +16,6 @@ defmodule Mix.Tasks.Setup do
          :ok <- create_new_travis_yml(),
          :ok <- create_new_readme(),
          :ok <- remove_readme_template(),
-         
          :ok <- remove_setup_config(),
          :ok <- remove_setup_test(),
          :ok <- remove_mix_task(),
@@ -126,8 +125,8 @@ defmodule Mix.Tasks.Setup do
   """
   def remove_setup_test do
     Mix.Shell.IO.info "Removing setup test file"
-    # Mix.Shell.IO.cmd("rm -rf test/setup_test.exs")
-    File.rm!("test/setup_test.exs")
+    Mix.Shell.IO.cmd("rm -rf test/setup_test.exs")
+    # File.rm!("test/setup_test.exs")
     :ok
   rescue
     _ -> {:error, "Failed to remove setup test"}

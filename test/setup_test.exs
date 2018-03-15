@@ -15,6 +15,8 @@ defmodule SetupTest do
 
     :os.cmd('mix deps.get')
     :os.cmd('mix setup #{@app_name} #{@app_dir}')
+
+    :ok
   end
 
   # NOTE: Instead of curl'ing localhost (which doesn't seem to work in a docker container in travis test), why don't we just test that the layout template (lib/phoenix_starter_web/templates/layout contains Hello #{@app_name}!

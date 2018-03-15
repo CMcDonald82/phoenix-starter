@@ -239,6 +239,8 @@ defmodule Mix.Tasks.Setup do
         "git init",
         "git add -A",
         "git commit -m 'init - first commit'",
+        "git config user.email #{config()[:git_user_email]}",
+        "git config user.name #{config()[:git_user_name]}"
       ]
       |> Enum.each(&Mix.Shell.IO.cmd/1)
     end

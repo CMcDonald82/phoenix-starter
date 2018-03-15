@@ -56,7 +56,9 @@ docker build -t phoenix-build:latest .
 4. Set local environment variables: 
   - PHOENIX_APP_NAME: the new name you're giving your project. This env var will be used by the edeliver config and the custom vm.args.prod file (if we decide to include that file in the repo).
 ```
+export REPLACE_OS_VARS=true
 export PHOENIX_APP_NAME="<newname>"
+export COOKIE="<my cookie>"
 ```
 
 5. Get mix deps # NOTE: Might want to put this in the setup task

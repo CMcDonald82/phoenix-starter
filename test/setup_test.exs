@@ -18,7 +18,6 @@ defmodule SetupTest do
     :ok
   end
 
-  # NOTE: Instead of curl'ing localhost (which doesn't seem to work in a docker container in travis test), why don't we just test that the layout template (lib/phoenix_starter_web/templates/layout contains Hello #{@app_name}!
   @tag timeout: :infinity
   test "sets up app with passed in app name params" do
     assert check_app_renamed()
@@ -28,20 +27,6 @@ defmodule SetupTest do
     refute File.exists?("#{@app_dir}/README.tmp.md")
     refute File.exists?("#{@app_dir}/config/setup.exs")
     refute File.exists?("#{@app_dir}/lib/mix/tasks/setup.ex")
-    
-    
-    
-    
-
-    # NOTE: Not needed anymore
-    start_server()
-    :timer.sleep(10000)
-    page = :os.cmd('curl http://$(docker-machine ip default):4000')
-    IO.inspect(page)
-    # {page, 0} = System.cmd("curl", ['$(docker-machine ip default):4000'])
-    # {page, 0} = System.cmd("curl", ["localhost:4000"])
-    assert page |> String.contains?("Hello #{@app_name}!")
-    kill_server()
   end
 
   defp git_clone_starter do
@@ -78,28 +63,6 @@ defmodule SetupTest do
   defp read_file_lines(path) do
     File.read!(path)
     |> String.split("\n")
-  end
-
-
-  defp start_server do
-    spawn fn ->
-      :os.cmd('mix phx.server')
-    end
-  end
-
-  defp kill_server do
-    "ps"
-    |> System.cmd(["-ef"])
-    |> elem(0)
-    |> String.split("\n")
-    |> Enum.filter(&(&1 |> String.contains?("mix phx.server")))
-    |> Enum.each(fn process ->
-      pid = process
-      |> String.split(" ")
-      |> Enum.reject(&(&1 == ""))
-      |> Enum.at(1)
-      :os.cmd('kill -9 #{pid}')
-    end)
   end
 
 end

@@ -35,7 +35,7 @@ NOTE: The containers in steps 3.a and 3.b MUST be built before going further sin
 
 1. Clone the repo into a new project directory:
 ```
-git clone https://github.com/CMcDonald82/phoenix-starter.git phoenix_starter
+git clone https://github.com/CMcDonald82/phoenix-starter.git <new_app_name>
 ```
 
 2. Add a public key to the project's top-level directory (this key will be used to SSH into the Docker container for building releases)

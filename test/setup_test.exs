@@ -5,10 +5,7 @@ defmodule SetupTest do
   @app_name "PhoenixStarterTestApp"
   @git_repo "https://github.com/CMcDonald82/phoenix-starter.git"
 
-
-  # NOTE: Instead of curl'ing localhost (which doesn't seem to work in a docker container in travis test), why don't we just test that the layout template (lib/phoenix_starter_web/templates/layout contains Hello #{@app_name}!
-  @tag timeout: :infinity
-  test "sets up app with passed in app name params" do
+  setup_all do
     File.cd!("..")
     :os.cmd('rm -rf #{@app_dir}')
     git_clone_starter()
@@ -18,6 +15,14 @@ defmodule SetupTest do
 
     :os.cmd('mix deps.get')
     :os.cmd('mix setup #{@app_name} #{@app_dir}')
+  end
+
+  # NOTE: Instead of curl'ing localhost (which doesn't seem to work in a docker container in travis test), why don't we just test that the layout template (lib/phoenix_starter_web/templates/layout contains Hello #{@app_name}!
+  @tag timeout: :infinity
+  test "sets up app with passed in app name params" do
+    
+
+    
     assert check_app_renamed()
     refute check_rename_dep_exists()
     assert check_new_travis_file()

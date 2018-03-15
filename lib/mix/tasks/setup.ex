@@ -79,7 +79,7 @@ defmodule Mix.Tasks.Setup do
   Removes the Rename dependency from deps in mix.exs (since it will no longer be needed in the new 
   project being created)
   """
-  defp remove_rename_dep do
+  def remove_rename_dep do
     Mix.Shell.IO.info "Removing rename dependency"
 
     with_rename_dep_removed = "mix.exs"
@@ -87,14 +87,14 @@ defmodule Mix.Tasks.Setup do
     |> String.split("\n")
     |> Enum.reject(&(&1 |> String.contains?(":rename")))
     |> Enum.join("\n")
-    
+
     File.write!("mix.exs", with_rename_dep_removed)
   end
 
   @doc """
   Removes this task (the mix task) since we don't need it anymore once the new project is configured
   """
-  defp remove_mix_task do
+  def remove_mix_task do
     Mix.Shell.IO.info "Removing this mix task (since it is no longer needed once the new project has been setup)"
     # Mix.Shell.IO.cmd("rm -rf lib/mix")
     File.rm_rf!("lib/mix")
@@ -107,7 +107,7 @@ defmodule Mix.Tasks.Setup do
   Removes the setup config file since we don't need it anymore once the new project is configured
   The setup config file is imported in config/dev.exs
   """
-  defp remove_setup_config do
+  def remove_setup_config do
     Mix.Shell.IO.info "Removing setup config file"
     # Mix.Shell.IO.cmd("rm -rf config/setup.exs")
     File.rm!("config/setup.exs")

@@ -27,6 +27,7 @@ defmodule SetupTest do
     refute File.exists?("#{@app_dir}/README.tmp.md")
     refute File.exists?("#{@app_dir}/config/setup.exs")
     refute File.exists?("#{@app_dir}/lib/mix/tasks/setup.ex")
+    refute File.exists?("#{@app_dir}/test/setup_test.exs")
   end
 
   defp git_clone_starter do

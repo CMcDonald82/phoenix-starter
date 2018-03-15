@@ -24,6 +24,7 @@ defmodule SetupTest do
     refute check_rename_dep_exists()
     assert check_new_travis_file()
     assert check_new_readme_file()
+    assert check_git_reinit()
     refute File.exists?("#{@app_dir}/README.tmp.md")
     refute File.exists?("#{@app_dir}/config/setup.exs")
     refute File.exists?("#{@app_dir}/lib/mix/tasks/setup.ex")
@@ -39,6 +40,11 @@ defmodule SetupTest do
     :os.cmd('git fetch')
     :os.cmd('git branch')
     :os.cmd('git checkout add_setup_task')
+  end
+
+  defp check_git_reinit do
+    email = :os.cmd('git config user.email')
+    IO.inspect(email)
   end
 
   defp check_app_renamed do

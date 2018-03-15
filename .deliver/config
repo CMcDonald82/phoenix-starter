@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 AUTO_VERSION=commit-count+git-revision+branch-unless-master
-APP="phoenix_starter" #$PHOENIX_APP_NAME
+APP=$PHOENIX_APP_NAME
 
 BUILD_HOST="localhost"
 BUILD_USER="builder"

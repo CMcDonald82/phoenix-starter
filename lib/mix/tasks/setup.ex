@@ -12,6 +12,7 @@ defmodule Mix.Tasks.Setup do
   def run([name, otp_name]) do
     with :ok <- rename_app(name, otp_name),
          :ok <- remove_rename_dep(),
+         :ok <- install_frontend_pkgs(),
          # :ok <- yarn_init() # Run yarn install here?
          :ok <- create_new_travis_yml(),
          :ok <- create_new_readme(),
@@ -19,7 +20,6 @@ defmodule Mix.Tasks.Setup do
          :ok <- remove_setup_config(),
          :ok <- remove_mix_task(),
          :ok <- remove_setup_test(),
-         :ok <- install_frontend_pkgs(),
          :ok <- git_reinit() do  
       :ok
     end

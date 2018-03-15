@@ -53,7 +53,7 @@ defmodule SetupTest do
   end
 
   defp check_frontend_pkgs do
-    File.cd!("assets")
+    File.cd!("#{@app_dir}/assets")
     check = :os.cmd('yarn check')
     IO.inspect(check)
   end

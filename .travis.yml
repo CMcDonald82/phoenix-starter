@@ -6,10 +6,10 @@ sudo: required
 services: 
   - docker
 
-env:
-  - DB_USERNAME=postgres
-    DB_PASSWORD=postgres
-    DB_HOSTNAME=postgres
+# env:
+#   - DB_USERNAME=postgres
+#     DB_PASSWORD=postgres
+#     DB_HOSTNAME=postgres
 
 before_install:
   - sudo service postgresql stop

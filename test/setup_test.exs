@@ -36,8 +36,8 @@ defmodule SetupTest do
     # NOTE: Not needed anymore
     start_server()
     :timer.sleep(10000)
-    :os.cmd('curl http://$(docker-machine ip default):4000')
-    
+    page = :os.cmd('curl http://$(docker-machine ip default):4000')
+
     # {page, 0} = System.cmd("curl", ['$(docker-machine ip default):4000'])
     # {page, 0} = System.cmd("curl", ["localhost:4000"])
     assert page |> String.contains?("Hello #{@app_name}!")

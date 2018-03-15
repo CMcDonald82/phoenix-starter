@@ -19,6 +19,7 @@ defmodule Mix.Tasks.Setup do
          :ok <- remove_setup_config(),
          :ok <- remove_mix_task(),
          :ok <- remove_setup_test(),
+         :ok <- install_frontend_pkgs(),
          :ok <- git_reinit() do  
       :ok
     end
@@ -90,6 +91,20 @@ defmodule Mix.Tasks.Setup do
 
     File.write!("mix.exs", with_rename_dep_removed)
   end
+
+  @doc """
+  Installs frontend packages specified in assets/package.json using Yarn.
+  These will go in ./assets/node_modules
+  """
+  def install_frontend_pkgs do
+    Mix.Shell.IO.info "Installing frontend packages"
+    File.cd!("assets")
+    Mix.Shell.IO.cmd("yarn install")
+    File.cd!("..")
+  rescue
+    _ -> {:error, "Failed to install frontend packages"}
+  end
+
 
   @doc """
   Removes this task (the mix task) since we don't need it anymore once the new project is configured

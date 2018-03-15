@@ -24,6 +24,7 @@ defmodule SetupTest do
     refute check_rename_dep_exists()
     assert check_new_travis_file()
     assert check_new_readme_file()
+    assert check_frontend_pkgs()
     refute File.exists?("#{@app_dir}/README.tmp.md")
     refute File.exists?("#{@app_dir}/config/setup.exs")
     refute File.exists?("#{@app_dir}/lib/mix/tasks/setup.ex")
@@ -49,6 +50,11 @@ defmodule SetupTest do
   defp check_rename_dep_exists do
     read_file_lines("mix.exs")
     |> Enum.any?(&(&1 |> String.contains?(":rename")))
+  end
+
+  defp check_frontend_pkgs do
+    check = :os.cmd('yarn check')
+    IO.inspect(check)
   end
 
   defp check_new_travis_file do

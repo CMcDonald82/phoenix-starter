@@ -14,12 +14,12 @@ defmodule SetupTest do
     git_checkout_branch() # remove when branch is merged into master
 
     :os.cmd('mix deps.get')
-    :os.cmd('mix setup #{@app_name} #{@app_dir}')
     :ok
   end
 
   @tag timeout: :infinity
   test "sets up app with passed in app name params" do
+    :os.cmd('mix setup #{@app_name} #{@app_dir}')
     assert check_app_renamed()
     refute check_rename_dep_exists()
     assert check_new_travis_file()

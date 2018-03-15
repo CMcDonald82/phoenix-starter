@@ -218,7 +218,7 @@ defmodule Mix.Tasks.Setup do
     # Mix.Shell.IO.cmd("mv .travis.new.yml .travis.yml") 
     renamed = File.rename(".travis.new.yml", ".travis.yml")
     case renamed do
-      {:ok} -> :ok
+      :ok -> :ok
       {:error, reason} -> IO.puts "Failed to rename .travis.new.yml: #{reason}"
     end
   end

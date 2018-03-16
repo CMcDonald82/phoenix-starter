@@ -35,7 +35,7 @@ NOTE: The containers in steps 3.a and 3.b MUST be built before going further sin
 
 1. Clone the repo into a new project directory and cd into it:
 ```
-git clone https://github.com/CMcDonald82/phoenix-starter.git <new_app_name> && cd <new_app_name>
+git clone https://github.com/CMcDonald82/phoenix-starter.git <new_project_dir> && cd <new_project_dir>
 ```
 
 2. Add a public key to the project's top-level directory (this key will be used to SSH into the Docker container for building releases)
@@ -54,7 +54,8 @@ docker build -t phoenix-build:latest .
 ```
 
 4. Set local environment variables: 
-  - PHOENIX_APP_NAME: the new name you're giving your project. This env var will be used by the edeliver config and the custom vm.args.prod file (if we decide to include that file in the repo).
+  - PHOENIX_APP_NAME: This is the new name you're giving your project. This env var will be used by the edeliver config and the custom vm.args.prod file. It should be the [snake_case](https://en.wikipedia.org/wiki/Snake_case) version of the name you want to give your new app (for example, if you're calling your new project ExampleApp, you would set this env var to example_app). This same variable also needs to be set to the same value on the server you are deploying to. 
+  - PHOENIX_STARTER_PROD_HOST/PHOENIX_STARTER_STG_HOST: These variables should be set to either the domain name or IP address (if you haven't associated a domain name with your server yet) of your production and staging servers, respectively. If you do not have a production or a staging server set up, you do not need to set these variables (for example, if you only have a production server to deploy to, you do not need to set the variable for the staging server). However, since these variables are used for deployment, you will need to set them if you want to deploy to those servers.
 ```
 export REPLACE_OS_VARS=true
 export PHOENIX_APP_NAME="<newname>"
@@ -74,9 +75,9 @@ docker-compose run phoenix mix deps.get
 docker-compose run -w /app/assets phoenix yarn install
 ```
 
-7. Rename the app
+7. Run the mix setup task to rename the app, create a new README, and initialize a new fresh git repo for the new project
 ```
-docker-compose run phoenix mix rename PhoenixStarter <NewName> phoenix_starter <new_name>
+docker-compose run phoenix mix setup PhoenixStarter <NewName> phoenix_starter <new_name>
 ```
 
 8. Create and migrate the database # NOTE: Might want to put these in the setup task

@@ -30,30 +30,25 @@ docker-compose [-f docker-compose.<dev|build|test>.yml ...] <service>
 
 ## Setup
 
-NOTE: The containers in steps 4.a and 4.b MUST be built before going further since some of the following steps depend on them
+NOTE: The containers in steps 3.a and 3.b MUST be built before going further since some of the following steps depend on them
 
 
-1. Clone the repo into a new project directory:
+1. Clone the repo into a new project directory and cd into it:
 ```
-git clone https://github.com/CMcDonald82/phoenix-starter.git <new_app_name>
-```
-
-2. Change into the new app directory
-```
-cd <new_app_name>
+git clone https://github.com/CMcDonald82/phoenix-starter.git <new_app_name> && cd <new_app_name>
 ```
 
-3. Add a public key to the project's top-level directory (this key will be used to SSH into the Docker container for building releases)
+2. Add a public key to the project's top-level directory (this key will be used to SSH into the Docker container for building releases)
 ```
 cp <path-to-ssh-pubkey-on-local-machine> ./ssh_key.pub
 ```
 
-4. a.) Build the base Docker container (must be named phoenix_base since the docker-compose files depend on it). This container will be used for local development/debugging and running tests (locally and via Travis)
+3. a.) Build the base Docker container (must be named phoenix_base since the docker-compose files depend on it). This container will be used for local development/debugging and running tests (locally and via Travis)
 ```
 docker build --target base -t phoenix-base:latest .
 ```
 
-4. b.) Build the build Docker container (must be named phoenix_build since the docker-compose files depend on it). This container will be used to build releases in
+3. b.) Build the build Docker container (must be named phoenix_build since the docker-compose files depend on it). This container will be used to build releases in
 ```
 docker build -t phoenix-build:latest .
 ```

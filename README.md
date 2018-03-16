@@ -60,7 +60,6 @@ export REPLACE_OS_VARS=true
 export PHOENIX_APP_NAME="<newname>"
 export PHOENIX_STARTER_PROD_HOST="<domain name or IP of prod server>"
 export PHOENIX_STARTER_STG_HOST="<domain name or IP of stg server>"
-export COOKIE="<my cookie>"
 ```
 
 ## NOTE: Maybe add something here about optionally configuring the :git_reinit, :git_user_email, and :git_user_name config vars in config/setup.exs

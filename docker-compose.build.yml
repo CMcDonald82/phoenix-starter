@@ -1,11 +1,16 @@
 version: '3.3'
 
+# can PHOENIX_STARTER_PROD_HOST be removed? 
+# may only be needed for deploying the release (which is done outside the container the release is built in). 
+# Then again, may be needed within the build container if edeliver needs access to it 
+# Pretty sure it's not needed since the actual deployment to the server (performed by Edeliver) is done outside the build container
+
 services:
   phoenix:
     image: phoenix-build
     command: "/usr/sbin/sshd -D"
     environment:
-      - PHOENIX_STARTER_PROD_HOST=${PHOENIX_STARTER_PROD_HOST} # can this be removed? may only be needed for deploying the release (which is done outside the container the release is built in)
+      - PHOENIX_STARTER_PROD_HOST=${PHOENIX_STARTER_PROD_HOST} 
     ports: 
       - "22:22"
     

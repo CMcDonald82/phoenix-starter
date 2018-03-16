@@ -54,11 +54,11 @@ docker build -t phoenix-build:latest .
 ```
 
 4. Set local environment variables: 
-  - PHOENIX_APP_NAME: This is the new name you're giving your project. This env var will be used by the edeliver config and the custom vm.args.prod file. It should be the [snake_case](https://en.wikipedia.org/wiki/Snake_case) version of the name you want to give your new app (for example, if you're calling your new project ExampleApp, you would set this env var to example_app). This same variable also needs to be set to the same value on the server you are deploying to. 
+  - PHOENIX_OTP_APP_NAME: This is the new name you're giving your project. This variable will be used by the Edeliver config and the custom vm.args.prod file. It should be the [snake_case](https://en.wikipedia.org/wiki/Snake_case) version of the name you want to give your new app (for example, if you're calling your new project ExampleApp, you would set this env var to example_app). This same variable also needs to be set to the same value on the server you are deploying to. 
   - PHOENIX_STARTER_PROD_HOST/PHOENIX_STARTER_STG_HOST: These variables should be set to either the domain name or IP address (if you haven't associated a domain name with your server yet) of your production and staging servers, respectively. If you do not have a production or a staging server set up, you do not need to set these variables (for example, if you only have a production server to deploy to, you do not need to set the variable for the staging server). However, since these variables are used for deployment, you will need to set them if you want to deploy to those servers.
 ```
 export REPLACE_OS_VARS=true
-export PHOENIX_APP_NAME="<newname>"
+export PHOENIX_OTP_APP_NAME="<newname>"
 export PHOENIX_STARTER_PROD_HOST="<domain name or IP of prod server>"
 export PHOENIX_STARTER_STG_HOST="<domain name or IP of stg server>"
 ```

@@ -237,10 +237,10 @@ defmodule Mix.Tasks.Setup do
       [
         "rm -rf .git",
         "git init", # maybe stop here and have the user do the git add & git commit so the message about the email doesn't appear since this appears when in the docker container
-        "git add -A",
-        "git commit -m 'init - first commit'",
-        "git config user.email #{config()[:git_user_email]}",
-        "git config user.name #{config()[:git_user_name]}"
+        # "git add -A",
+        # "git commit -m 'init - first commit'",
+        # "git config user.email #{config()[:git_user_email]}",
+        # "git config user.name #{config()[:git_user_name]}"
       ]
       |> Enum.each(&Mix.Shell.IO.cmd/1)
     end

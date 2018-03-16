@@ -24,7 +24,7 @@ defmodule SetupTest do
     refute check_rename_dep_exists()
     assert check_new_travis_file()
     assert check_new_readme_file()
-    assert check_git_reinit()
+    # assert check_git_reinit()
     refute File.exists?("#{@app_dir}/README.tmp.md")
     refute File.exists?("#{@app_dir}/config/setup.exs")
     refute File.exists?("#{@app_dir}/lib/mix/tasks/setup.ex")

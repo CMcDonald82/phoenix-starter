@@ -42,10 +42,10 @@ defmodule SetupTest do
     :os.cmd('git checkout add_setup_task')
   end
 
-  defp check_git_reinit do
-    email = :os.cmd('git config user.email')
-    IO.inspect(email)
-  end
+  # defp check_git_reinit do
+  #   email = :os.cmd('git config user.email')
+  #   IO.inspect(email)
+  # end
 
   defp check_app_renamed do
     read_file_lines("mix.exs")

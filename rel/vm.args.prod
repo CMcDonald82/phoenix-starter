@@ -1,5 +1,5 @@
 ## Name of the node
--name ${PHOENIX_APP_NAME}@127.0.0.1
+-name ${PHOENIX_OTP_APP_NAME}@127.0.0.1
 
 ## Cookie for distributed erlang
 -setcookie ${COOKIE}
@@ -19,7 +19,7 @@
 ##-env ERL_FULLSWEEP_AFTER 10
 
 ## Command to run when heart process tries to reboot
--env HEART_COMMAND "/home/deploy/app_release/${PHOENIX_APP_NAME}/bin/${PHOENIX_APP_NAME} start"
+-env HEART_COMMAND "/home/deploy/app_release/${PHOENIX_OTP_APP_NAME}/bin/${PHOENIX_OTP_APP_NAME} start"
 
 -env ERL_CRASH_DUMP_SECONDS -1
 

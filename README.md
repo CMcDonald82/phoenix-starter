@@ -95,6 +95,22 @@ To build a release:
 docker-compose -f docker-compose.yml -f docker-compose.build.yml up
 ```
 
+* The first time you run the container, ssh into it before building the release. Do this from a different terminal window than the one the build container is running in. Type yes at the prompt Are you sure you want to continue connecting (yes/no)?
+```
+ssh builder@localhost
+```
+
+* If you get the following warning, you can remove the existing ssh key that's in the known_hosts file so it can be replaced with the new, updated one. This scenario can happen if you build the container, then delete it, then build it again. 
+```
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+```
+Run the following command to remove the existing ssh key that's in the known_hosts file
+```
+ssh-keygen -R localhost
+```
+
 * Run mix deps.get locally (outside the Docker container). This is necessary since we will be running the Edeliver commands outside a Docker container.
 ```
 mix deps.get

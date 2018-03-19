@@ -65,4 +65,5 @@ defmodule Mix.Tasks.ErlangCookie do
   defp print_error_message(error) do
     Mix.Shell.IO.error(error)
   end
+  
 end

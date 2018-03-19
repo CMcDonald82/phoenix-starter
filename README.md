@@ -63,24 +63,24 @@ export PHOENIX_STARTER_PROD_HOST="<domain name or IP of prod server>"
 export PHOENIX_STARTER_STG_HOST="<domain name or IP of stg server>"
 ```
 
-## NOTE: Maybe add something here about optionally configuring the :git_reinit, :git_user_email, and :git_user_name config vars in config/setup.exs
+## NOTE: Maybe add something here about optionally configuring the :git_reinit config var in config/setup.exs
 
-5. Get mix deps # NOTE: Might want to put this in the setup task
+5. Get mix deps 
 ```
 docker-compose run phoenix mix deps.get
 ```
 
-6. Install frontend dependencies (via yarn) - these will go in ./assets/node_modules
+6. Install frontend dependencies (via Yarn) 
 ```
 docker-compose run -w /app/assets phoenix yarn install
 ```
 
-7. Run the mix setup task to rename the app, create a new README, and initialize a new fresh git repo for the new project
+7. Run the mix setup task to rename the app, create a new README, and initialize a fresh git repo for the new project
 ```
 docker-compose run phoenix mix setup PhoenixStarter <NewName> phoenix_starter <new_name>
 ```
 
-8. Create and migrate the database # NOTE: Might want to put these in the setup task
+8. Create and migrate the database 
 ```
 docker-compose run phoenix mix ecto.create
 docker-compose run phoenix mix ecto.migrate
@@ -93,6 +93,11 @@ To build a release:
 * Run the container that the build will be performed in
 ```
 docker-compose -f docker-compose.yml -f docker-compose.build.yml up
+```
+
+* Run mix deps.get locally (outside the Docker container). This is necessary since we will be running the Edeliver commands outside a Docker container.
+```
+mix deps.get
 ```
 
 * Add node_modules to local git repo (since these will be needed by edeliver to build the release within the Docker container)

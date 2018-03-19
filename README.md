@@ -100,7 +100,7 @@ docker-compose -f docker-compose.yml -f docker-compose.build.yml up
 mix deps.get
 ```
 
-* Add node_modules to local git repo (since these will be needed by edeliver to build the release within the Docker container)
+* Add node_modules to local git repo (since these will be needed by edeliver to build the release within the Docker container) - might not be needed anymore
 ```
 git add .
 git commit -am 'add /assets/node_modules to local git repo'

@@ -110,8 +110,7 @@ defmodule Mix.Tasks.Setup do
   """
   def remove_mix_task do
     Mix.Shell.IO.info "Removing this mix task (since it is no longer needed once the new project has been setup)"
-    # Mix.Shell.IO.cmd("rm -rf lib/mix")
-    File.rm_rf!("lib/mix")
+    File.rm!("lib/mix/tasks/setup.ex")
     :ok
   rescue
     _ -> {:error, "Failed to remove mix task"}

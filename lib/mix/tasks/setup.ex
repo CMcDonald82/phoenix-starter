@@ -95,14 +95,14 @@ defmodule Mix.Tasks.Setup do
   Installs frontend packages specified in assets/package.json using Yarn.
   These will go in ./assets/node_modules
   """
-  def install_frontend_pkgs do
-    Mix.Shell.IO.info "Installing frontend packages"
-    File.cd!("assets")
-    Mix.Shell.IO.cmd("yarn install")
-    File.cd!("..")
-  rescue
-    _ -> {:error, "Failed to install frontend packages"}
-  end
+  # def install_frontend_pkgs do
+  #   Mix.Shell.IO.info "Installing frontend packages"
+  #   File.cd!("assets")
+  #   Mix.Shell.IO.cmd("yarn install")
+  #   File.cd!("..")
+  # rescue
+  #   _ -> {:error, "Failed to install frontend packages"}
+  # end
 
 
   @doc """

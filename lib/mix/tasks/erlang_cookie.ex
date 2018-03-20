@@ -16,7 +16,7 @@ defmodule Mix.Tasks.ErlangCookie do
 
 
   @doc """
-  This function runs the task with a string input from the command line.
+  This function runs the task
   """
   def run([]) do
     with :ok <- create_erlang_cookie() do
@@ -33,9 +33,8 @@ defmodule Mix.Tasks.ErlangCookie do
   """
   def run(_) do
     """
-    The run/1 function needs to be called with the string that is to 
-    be transformed into the erlang magic cookie:
-    mix erlang_cookie mycookie
+    This task should be run with no args:
+    mix erlang_cookie
     """
     |> print_error_message
   end
@@ -55,8 +54,7 @@ defmodule Mix.Tasks.ErlangCookie do
     Erlang magic cookie successfully created!
 
     Check the .erlang_cookie file
-    Copy the cookie in that file and export the environment variable ERLANG_COOKIE 
-    locally and on the remote host.
+    Copy the cookie in that file and export the environment variable ERLANG_COOKIE on the remote host.
 
     export ERLANG_COOKIE=<value copied from .erlang_cookie file>
     """

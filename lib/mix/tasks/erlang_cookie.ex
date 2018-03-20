@@ -19,7 +19,7 @@ defmodule Mix.Tasks.ErlangCookie do
   This function runs the task with a string input from the command line.
   """
   def run([]) do
-    with :ok <- create_erlang_cookie(str) do
+    with :ok <- create_erlang_cookie do
       :ok
     end
     |> case do

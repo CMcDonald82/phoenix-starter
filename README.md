@@ -73,7 +73,10 @@ export PHOENIX_STARTER_STG_HOST="<domain name or IP of stg server>"
   - DB_USERNAME: This is the username of the user that will be connecting to the prod database. This user should be created on the server along with the production database (this can be done manually or via something like the Ansible playbook linked above). 
   - DB_PASSWORD: The password for the user that will be connecting to the prod database. 
   - DB_HOSTNAME: The hostname of the server where the database will be. We can set this to localhost if we are running the database on the same host as the app.
-  - SECRET_KEY_BASE: This is a token that is used by the Phoenix app. MORE INFO HERE
+  - SECRET_KEY_BASE: This is a token that is used by the Phoenix app. Generate one with the following command:
+```
+mix phoenix.gen.secret
+```
   - DOMAIN_NAME: The domain name for the remote server (ex. example.com). You will need to have obtained, setup and configured this separately (purchase domain name and set it up to point to the server you will be deploying your app to.)See [this project](https://github.com/CMcDonald82/ansible-playbook-ubuntu-phoenix) for some instructions on how to do this.
   - PORT: The port that the Phoenix app will be running on. You can set this to 4000.
   - PHOENIX_OTP_APP_NAME: Set this to the same value you set it to locally (the snake_case version of the name you want to give your new app).

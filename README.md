@@ -88,12 +88,14 @@ docker-compose run phoenix mix ecto.migrate
 
 
 To build a release:
-* Set the environment variable PHOENIX_STARTER_PROD_HOST to be the domain name you have set up for the server
+* Make sure you've set the environment variable PHOENIX_STARTER_PROD_HOST to be the domain name you have set up for the server
 
 * Run the container that the build will be performed in
 ```
 docker-compose -f docker-compose.yml -f docker-compose.build.yml up
 ```
+
+You may skip the 
 
 * The first time you run the container, ssh into it before building the release. Do this from a different terminal window than the one the build container is running in. Type yes at the prompt Are you sure you want to continue connecting (yes/no)?
 ```
@@ -126,6 +128,7 @@ git commit -am 'add /assets/node_modules to local git repo'
 ```
 mix edeliver build release --verbose
 ```
+
 
 
 ## Notes/Links

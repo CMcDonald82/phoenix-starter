@@ -1,7 +1,7 @@
 # phoenix-starter
 A starter Elixir/Phoenix project that can be used as a base to build off of
 
-NOTE: This project can be run inside a Docker container for development (in which case it includes a Postgres database container), for production builds (the container has the same OS (Ubuntu 16.04) as the target server to deploy to so the build can use distillery/edeliver to build a release and deploy it to the server), and for tests.
+NOTE: (reword this section) This project can be run inside a Docker container for development (in which case it includes a Postgres database container), for production builds (the container has the same OS (Ubuntu 16.04) as the target server to deploy to so the build can use distillery/edeliver to build a release and deploy it to the server), and for tests.
 
 This project includes the following:
 * Erlang/Elixir (latest)
@@ -13,20 +13,6 @@ This project includes the following:
 
 NOTE: This is a work in progress so it is not ready to use yet. When it is, you are welcome to (and should!) use this 
 project as a base to get a new Phoenix/React project going!
-
-## Useful Commands
-
-To run a bash shell into the container:
-```
-docker run -it phoenixstarter_phoenix /bin/bash
-```
-
-To run inside a Docker container, run all commands as the following:
-
-```
-docker-compose [-f docker-compose.<dev|build|test>.yml ...] <service> 
-```
-
 
 ## Setup
 
@@ -66,7 +52,33 @@ export PHOENIX_STARTER_PROD_HOST="<domain name or IP of prod server>"
 export PHOENIX_STARTER_STG_HOST="<domain name or IP of stg server>"
 ```
 
-5. Set environment variables on remote host:
+## NOTE: Maybe add something here about optionally configuring the :git_reinit config var in config/setup.exs
+
+5. Get mix deps 
+```
+docker-compose run phoenix mix deps.get
+```
+
+6. Install frontend dependencies (via Yarn) 
+```
+docker-compose run -w /app/assets phoenix yarn install
+```
+
+7. Run the mix setup task to rename the app, create a new README, and initialize a fresh git repo for the new project
+```
+docker-compose run phoenix mix setup PhoenixStarter <NewName> phoenix_starter <new_name>
+```
+
+8. Create and migrate the database 
+```
+docker-compose run phoenix mix ecto.create
+docker-compose run phoenix mix ecto.migrate
+```
+
+
+## Deployment
+
+1. Set environment variables on remote host:
   NOTE: These variables can be set either manually or using a provisioning tool such as Ansible. Check out (and feel free to use, if you'd like) [this Ansible playbook](https://github.com/CMcDonald82/ansible-playbook-ubuntu-phoenix) for an example of how to set these variables (and how to setup the remote host for deploying a Phoenix app in general)
   - REPLACE_OS_VARS: This is necessary for environment variables that are written as "${VARIABLE}" to be expanded.
   - DB_NAME: The name of the production database. This can be whatever you want, but a database with this name must be created on the remote host (this can be done manually or via something like the Ansible playbook linked above).
@@ -100,46 +112,18 @@ export PHOENIX_OTP_APP_NAME="<new_name>"
 export ERLANG_COOKIE=7B5FD1F101FBD4BBD6FB3F2BB11E72A62DCB9EDCAAFFCWHJJNKJNKMSIOJJ
 ```
 
-## NOTE: Maybe add something here about optionally configuring the :git_reinit config var in config/setup.exs
+* Make sure you've set the local environment variable PHOENIX_STARTER_PROD_HOST to be the domain name you have set up for the server (this should already have been done in step 4 of the 'Setup' instructions, above)
 
-6. Get mix deps 
-```
-docker-compose run phoenix mix deps.get
-```
-
-7. Install frontend dependencies (via Yarn) 
-```
-docker-compose run -w /app/assets phoenix yarn install
-```
-
-8. Run the mix setup task to rename the app, create a new README, and initialize a fresh git repo for the new project
-```
-docker-compose run phoenix mix setup PhoenixStarter <NewName> phoenix_starter <new_name>
-```
-
-9. Create and migrate the database 
-```
-docker-compose run phoenix mix ecto.create
-docker-compose run phoenix mix ecto.migrate
-```
-
-
-To build a release:
-* Make sure you've set the environment variable PHOENIX_STARTER_PROD_HOST to be the domain name you have set up for the server
-
-* Run the container that the build will be performed in
+* Run the container that the build will be performed in (do this in a separate terminal tab)
 ```
 docker-compose -f docker-compose.yml -f docker-compose.build.yml up
 ```
 
-You may skip the 
-
-* The first time you run the container, ssh into it before building the release. Do this from a different terminal window than the one the build container is running in. Type yes at the prompt Are you sure you want to continue connecting (yes/no)?
+NOTE: The first time you run the container, ssh into it before building the release. Do this from a different terminal window than the one the build container is running in. Type yes at the prompt 'Are you sure you want to continue connecting (yes/no)'?
 ```
 ssh builder@localhost
 ```
-
-* If you get the following warning, you can remove the existing ssh key that's in the known_hosts file so it can be replaced with the new, updated one. This scenario can happen if you build the container, then delete it, then build it again. 
+If you get the following warning, you can remove the existing ssh key that's in the known_hosts file so it can be replaced with the new, updated one. This scenario can happen if you build the container, then delete it, then build it again. 
 ```
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
@@ -164,6 +148,41 @@ git commit -am 'add /assets/node_modules to local git repo'
 * Build the release
 ```
 mix edeliver build release --verbose
+```
+
+* Deploy the release
+```
+mix edeliver deploy release to production --verbose
+```
+
+* Start the release on remote server
+```
+mix edeliver start production
+```
+
+
+You should be all set! Visit the domain you set up (i.e. example.com) in any browser and you should see your Phoenix app up and running!
+
+## Other Useful Commands
+
+* Stop the release on remote server
+```
+mis edeliver stop production
+```
+
+* Migrate the database on remote server
+```
+mix edeliver migrate production
+```
+
+* To run commands inside a Docker container, run them as follows:
+```
+docker-compose [-f docker-compose.<dev|build|test>.yml ...] run <service> <command>
+```
+
+* Run a bash shell in the container:
+```
+docker-compose run phoenix /bin/bash
 ```
 
 

@@ -77,5 +77,5 @@ RUN chmod 644 /home/builder/.ssh/authorized_keys
 # Configure public keys for sshd
 RUN echo "AuthorizedKeysFile  %h/.ssh/authorized_keys" >> /etc/ssh/sshd_config
 
-EXPOSE 22
-CMD ["/usr/sbin/sshd", "-D"]
+# EXPOSE 22
+# CMD ["/usr/sbin/sshd", "-D"]

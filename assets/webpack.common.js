@@ -13,8 +13,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, '../priv/static'),
-    filename: 'js/[name].js',
-    // publicPath: 'http://0.0.0.0:8080/'
+    filename: 'js/[name].js'
   },
   module: {
     rules: [

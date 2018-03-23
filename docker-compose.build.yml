@@ -10,7 +10,7 @@ services:
     image: phoenix-build
     command: "/usr/sbin/sshd -D"
     environment:
-      - PHOENIX_STARTER_PROD_HOST=${PHOENIX_STARTER_PROD_HOST} 
+      # - PHOENIX_STARTER_PROD_HOST=${PHOENIX_STARTER_PROD_HOST} 
     ports: 
       - "22:22"
     

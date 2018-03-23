@@ -6,9 +6,6 @@ services:
     command: mix phx.server
     environment:
       - MIX_ENV=dev
-      # - DB_USERNAME=${DB_USERNAME}
-      # - DB_PASSWORD=${DB_PASSWORD}
-      # - DB_HOSTNAME=${DB_HOSTNAME}
     ports:
         - "4000:4000"
         - "8080:8080"

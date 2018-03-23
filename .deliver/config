@@ -15,18 +15,6 @@ PRODUCTION_HOSTS=$PHOENIX_STARTER_PROD_HOST
 PRODUCTION_USER="deploy"
 DELIVER_TO="/home/deploy/app_release"
 
-# For Phoenix projects, symlink prod.secret.exs to tmp source
-# NOTE: Should not need this if not using prod.secret.exs for secrets (we will be using 12-factor app style instead) - put this note in README
-# pre_erlang_get_and_update_deps() {
-#   status "Linking to prod.secret.exs replacement config"
-#   local _prod_secret_path="/home/deploy/prod.secret.exs"
-#   if [ "$TARGET_MIX_ENV" = "prod" ]; then
-#     __sync_remote "
-#       ln -sfn '$_prod_secret_path' '$BUILD_AT/config/prod.secret.exs'
-#     "
-#   fi
-# }
-
 pre_erlang_clean_compile() {
   status "Install frontend dependencies"
   __sync_remote "

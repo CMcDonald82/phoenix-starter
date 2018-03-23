@@ -22,9 +22,7 @@ defmodule SetupTest do
     :os.cmd('mix setup #{@app_name} #{@app_dir}')
     assert check_app_renamed()
     refute check_rename_dep_exists()
-    assert check_new_travis_file()
     assert check_new_readme_file()
-    # assert check_git_reinit()
     refute File.exists?("#{@app_dir}/README.tmp.md")
     refute File.exists?("#{@app_dir}/config/setup.exs")
     refute File.exists?("#{@app_dir}/lib/mix/tasks/setup.ex")
@@ -42,11 +40,6 @@ defmodule SetupTest do
     :os.cmd('git checkout add_setup_task')
   end
 
-  # defp check_git_reinit do
-  #   email = :os.cmd('git config user.email')
-  #   IO.inspect(email)
-  # end
-
   defp check_app_renamed do
     read_file_lines("mix.exs")
     |> Enum.any?(&(&1 |> String.contains?(@app_name)))
@@ -55,11 +48,6 @@ defmodule SetupTest do
   defp check_rename_dep_exists do
     read_file_lines("mix.exs")
     |> Enum.any?(&(&1 |> String.contains?(":rename")))
-  end
-
-  defp check_new_travis_file do
-    read_file_lines(".travis.yml")
-    |> Enum.any?(&(&1 |> String.contains?("test yarn")))
   end
 
   defp check_new_readme_file do

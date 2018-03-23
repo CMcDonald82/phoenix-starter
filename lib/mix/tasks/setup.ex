@@ -4,16 +4,11 @@ defmodule Mix.Tasks.Setup do
   @shortdoc "Sets up a new clean-slate project using the phoenix-starter project as a base template"
 
   @doc """
-  The main function that runs all the necessary functions to setup the new app from the phoenix-starter project  
-
-  # NOTE: Should we run yarn install in this list of tasks? or have users do it separately from the command line as a docker-compose command (note that users will be instructed to run the mix setup task within a Docker container)
-  
+  The main function that runs all the necessary functions to setup the new app from the phoenix-starter project 
   """
   def run([name, otp_name]) do
     with :ok <- rename_app(name, otp_name),
          :ok <- remove_rename_dep(),
-         # :ok <- yarn_init() # Run yarn install here?
-         :ok <- create_new_travis_yml(),
          :ok <- create_new_readme(),
          :ok <- remove_readme_template(),
          :ok <- remove_setup_config(),
@@ -92,20 +87,6 @@ defmodule Mix.Tasks.Setup do
   end
 
   @doc """
-  Installs frontend packages specified in assets/package.json using Yarn.
-  These will go in ./assets/node_modules
-  """
-  # def install_frontend_pkgs do
-  #   Mix.Shell.IO.info "Installing frontend packages"
-  #   File.cd!("assets")
-  #   Mix.Shell.IO.cmd("yarn install")
-  #   File.cd!("..")
-  # rescue
-  #   _ -> {:error, "Failed to install frontend packages"}
-  # end
-
-
-  @doc """
   Removes this task (the mix task) since we don't need it anymore once the new project is configured
   """
   def remove_mix_task do
@@ -122,7 +103,6 @@ defmodule Mix.Tasks.Setup do
   """
   def remove_setup_config do
     Mix.Shell.IO.info "Removing setup config file"
-    # Mix.Shell.IO.cmd("rm -rf config/setup.exs")
     File.rm!("config/setup.exs")
 
     with_import_config_removed = "config/dev.exs"
@@ -143,23 +123,11 @@ defmodule Mix.Tasks.Setup do
   """
   def remove_setup_test do
     Mix.Shell.IO.info "Removing setup test file"
-    # Mix.Shell.IO.cmd("rm -rf test/setup_test.exs")
     File.rm!("test/setup_test.exs")
     :ok
   rescue
     _ -> {:error, "Failed to remove setup test"}
   end
-
-  @doc """
-  Renames the new README file to README.md
-  This will be the fresh new README file for the new project being created.
-
-  NOTE: This function can probably be removed if create_new_readme_new() works
-  """
-  # def create_new_readme do
-  #   Mix.Shell.IO.info "Creating new README.md file"
-  #   Mix.Shell.IO.cmd("mv README.new.md README.md")
-  # end
 
   @doc """
   This is the new version of create_new_readme which creates a new README file using the name of the new app, then
@@ -193,33 +161,6 @@ defmodule Mix.Tasks.Setup do
     :ok
   rescue
     _ -> {:error, "Failed to remove README.tmp.md"}
-  end
-
-  @doc """
-  Removes the .travis.yml for this setup task. This will help keep the new project clean. Since the .travis.yml file 
-  that is being removed just runs the test for the setup task (which is being removed), it is not necessary in the 
-  newly created project and a new .travis.yml file will be created for that project
-
-  NOTE: This function can probably be removed if we can use the File.mv function to just directly overwrite the 
-  original .travis.yml with the .travis.new.yml file
-  """
-  # def remove_original_travis_yml do
-  #   Mix.Shell.IO.info "Removing original .travis.yml file"
-  #   Mix.Shell.IO.cmd("rm .travis.yml") 
-  # end
-
-  @doc """
-  Renames the new .travis file to .travis.yml
-  This will be the fresh new travis file for the new project being created.
-  """
-  def create_new_travis_yml do
-    Mix.Shell.IO.info "Creating new .travis.yml file" 
-    # Mix.Shell.IO.cmd("mv .travis.new.yml .travis.yml") 
-    renamed = File.rename(".travis.new.yml", ".travis.yml")
-    case renamed do
-      :ok -> :ok
-      {:error, reason} -> IO.puts "Failed to rename .travis.new.yml: #{reason}"
-    end
   end
 
   @doc """

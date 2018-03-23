@@ -1,7 +1,7 @@
 {
   "name": "phoenix-starter",
   "version": "0.0.1",
-  "description": "Starter project integrating Phoenix, Webpack, React/Redux",
+  "description": "Starter project integrating Phoenix & Webpack",
   "author": "Chris McDonald",
   "license": "MIT",
   "scripts": {

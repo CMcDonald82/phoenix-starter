@@ -46,7 +46,7 @@ docker build -t phoenix-build:latest .
 ```
 EXAMPLE:
 
-export REPLACE_OS_VARS=true
+export REPLACE_OS_VARS=true # Not needed
 export PHOENIX_OTP_APP_NAME="<new_name>"
 export PHOENIX_STARTER_PROD_HOST="<domain name or IP of prod server>"
 export PHOENIX_STARTER_STG_HOST="<domain name or IP of stg server>"
@@ -69,10 +69,10 @@ docker-compose run -w /app/assets phoenix yarn install
 7. Run the mix setup task to rename the app, create a new README, and initialize a fresh git repo for the new project
 NOTE: Before running this task, you can optionally edit the config in config/setup.exs. You can specify the new name and otp_name of the project in either of 2 ways: pass the names in via the command line (as in the command below), or set the values of 'name' and 'otp_name' in the setup config file (config/setup.exs). You can also set git_reinit: true in the config/setup.exs file to have the setup task initialize a fresh new git repo for your new project.
 ```
-docker-compose run phoenix mix setup PhoenixStarter <NewName> phoenix_starter <new_otp_name>
+docker-compose run phoenix mix setup <NewName> <new_otp_name>
 
 EXAMPLE: If we want to rename our new project to My App this command would be:
-docker-compose run phoenix mix setup PhoenixStarter MyApp phoenix_starter my_app
+docker-compose run phoenix mix setup MyApp my_app
 Alternatively, we could set name: "MyApp" and otp_name: "my_app" in config/setup.exs and run the setup task without args:
 docker-compose run phoenix mix setup
 ```
@@ -133,6 +133,13 @@ export ERLANG_COOKIE=<output of erlang_cookie task>
 docker-compose -f docker-compose.yml -f docker-compose.build.yml up
 ```
 
+NOTE: The following steps will be done OUTSIDE the Docker container. You can open up a new tab in the terminal to run these commands (just make sure you're in the root directory of the project).
+
+* Run mix deps.get. This is necessary since we will be running the Edeliver commands outside a Docker container.
+```
+mix deps.get
+```
+
 NOTE: The first time you run the container, ssh into it before building the release. Do this from a different terminal window than the one the build container is running in. 
 ```
 ssh builder@localhost
@@ -149,16 +156,20 @@ Run the following command to remove the existing ssh key that's in the known_hos
 ```
 ssh-keygen -R localhost
 ```
+You should see a message that looks like the following:
+```
+# Host localhost found: line 16
+/Users/chris/.ssh/known_hosts updated.
+Original contents retained as /Users/chris/.ssh/known_hosts.old
+```
+Now, just try to ssh into the build container again and type yes at the prompt 'Are you sure you want to continue connecting (yes/no)'? You should now be in the container. Exit the container so you can continue running commands.
+```
+builder@57c31b3f3abb:~$ exit
+```
 
-* Run mix deps.get locally (outside the Docker container). This is necessary since we will be running the Edeliver commands outside a Docker container.
+* Commit locally
 ```
-mix deps.get
-```
-
-* Add node_modules to local git repo (since these will be needed by edeliver to build the release within the Docker container) - might not be needed anymore
-```
-git add .
-git commit -am 'add /assets/node_modules to local git repo'
+git commit -am 'commit message'
 ```
 
 * Build the release

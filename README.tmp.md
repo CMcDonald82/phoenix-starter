@@ -126,6 +126,13 @@ export ERLANG_COOKIE=<output of erlang_cookie task>
 docker-compose -f docker-compose.yml -f docker-compose.build.yml up
 ```
 
+NOTE: The following steps will be done OUTSIDE the Docker container. You can open up a new tab in the terminal to run these commands (just make sure you're in the root directory of the project).
+
+* Run mix deps.get. This is necessary since we will be running the Edeliver commands outside a Docker container.
+```
+mix deps.get
+```
+
 NOTE: The first time you run the container, ssh into it before building the release. Do this from a different terminal window than the one the build container is running in. 
 ```
 ssh builder@localhost
@@ -142,16 +149,20 @@ Run the following command to remove the existing ssh key that's in the known_hos
 ```
 ssh-keygen -R localhost
 ```
+You should see a message that looks like the following:
+```
+# Host localhost found: line 16
+/Users/chris/.ssh/known_hosts updated.
+Original contents retained as /Users/chris/.ssh/known_hosts.old
+```
+Now, just try to ssh into the build container again and type yes at the prompt 'Are you sure you want to continue connecting (yes/no)'? You should now be in the container. Exit the container so you can continue running commands.
+```
+builder@57c31b3f3abb:~$ exit
+```
 
-* Run mix deps.get locally (outside the Docker container). This is necessary since we will be running the Edeliver commands outside a Docker container.
+* Commit locally
 ```
-mix deps.get
-```
-
-* Add node_modules to local git repo (since these will be needed by edeliver to build the release within the Docker container) - might not be needed anymore
-```
-git add .
-git commit -am 'add /assets/node_modules to local git repo'
+git commit -am 'commit message'
 ```
 
 * Build the release

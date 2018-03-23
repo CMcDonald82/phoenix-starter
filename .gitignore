@@ -1,5 +1,6 @@
 # App artifacts
 /_build
+/db
 /deps
 /*.ez
 *.map
@@ -26,3 +27,6 @@ erl_crash.dump
 
 # Erlang node cookie
 .erlang_cookie
+
+# .env file for setting local environment variables
+.env

@@ -5,9 +5,6 @@ services:
     image: phoenix-base
     environment:
       - MIX_ENV=test
-      # - DB_USERNAME=${DB_USERNAME}
-      # - DB_PASSWORD=${DB_PASSWORD}
-      # - DB_HOSTNAME=${DB_HOSTNAME}
     volumes:
       - .:/app
     depends_on:

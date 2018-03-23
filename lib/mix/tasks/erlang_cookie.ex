@@ -14,7 +14,6 @@ defmodule Mix.Tasks.ErlangCookie do
   variable called ERLANG_COOKIE both locally and on the remote server.
   """
 
-
   @doc """
   This function runs the task
   """

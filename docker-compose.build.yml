@@ -8,9 +8,7 @@ version: '3.3'
 services:
   phoenix:
     image: phoenix-build
-    command: "/usr/sbin/sshd -D"
-    # environment:
-      # - PHOENIX_STARTER_PROD_HOST=${PHOENIX_STARTER_PROD_HOST} 
+    command: "/usr/sbin/sshd -D" 
     ports: 
       - "22:22"
     

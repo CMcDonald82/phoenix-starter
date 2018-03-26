@@ -10,9 +10,6 @@ defmodule SetupTest do
     :os.cmd('rm -rf #{@app_dir}')
     git_clone_starter()
     File.cd!(@app_dir)
-
-    git_checkout_branch() # remove when branch is merged into master
-
     :os.cmd('mix deps.get')
     :ok
   end
@@ -31,13 +28,6 @@ defmodule SetupTest do
 
   defp git_clone_starter do
     :os.cmd('git clone #{@git_repo} #{@app_dir}')
-  end
-
-  # NOTE: Can remove these git commands once we merge the add_setup_task branch into master
-  defp git_checkout_branch do
-    :os.cmd('git fetch')
-    :os.cmd('git branch')
-    :os.cmd('git checkout add_setup_task')
   end
 
   defp check_app_renamed do

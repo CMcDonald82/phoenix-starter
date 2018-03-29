@@ -99,7 +99,7 @@ defmodule Mix.Tasks.Setup do
 
   @doc """
   Removes the setup config file since we don't need it anymore once the new project is configured
-  The setup config file is imported in config/dev.exs
+  The setup config file is imported in config/dev.exs - remove the import statement there as well
   """
   def remove_setup_config do
     Mix.Shell.IO.info "Removing setup config file"

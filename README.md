@@ -1,4 +1,7 @@
 # phoenix-starter
+
+[![Build Status](https://travis-ci.org/CMcDonald82/phoenix-starter.svg?branch=master)](https://travis-ci.org/CMcDonald82/phoenix-starter)
+
 A starter Elixir/Phoenix project that can be used as a base to build off of
 
 This project includes:

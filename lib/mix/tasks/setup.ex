@@ -9,7 +9,7 @@ defmodule Mix.Tasks.Setup do
   def run([name, otp_name]) do
     with :ok <- rename_app(name, otp_name),
          :ok <- remove_rename_dep(),
-         :ok <- create_new_readme(),
+         :ok <- create_new_readme(name),
          :ok <- remove_readme_template(),
          :ok <- remove_setup_config(),
          :ok <- remove_mix_task(),
@@ -134,11 +134,11 @@ defmodule Mix.Tasks.Setup do
   writes the contents of the README.new.md file to the new README file (these are basically the instructions on how 
   to run the app (build Docker containers, run commands within them, build/deploy releases, etc))
   """
-  def create_new_readme do
+  def create_new_readme(name) do
     Mix.Shell.IO.info "Creating new README.md file"
     
     header = """
-    # #{config()[:name]}
+    # #{name}
     """
     
     File.open!("README.md", [:write])

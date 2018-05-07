@@ -4,11 +4,10 @@ defmodule Mix.Tasks.ErlangCookie do
   @shortdoc "Creates an Erlang cookie and outputs the value to a file"
 
   @moduledoc """
-  This task takes a string input on the command line and transforms it into a value suitable to be used as a "magic cookie"
-  for the Erlang node (see the "Security" section at http://erlang.org/doc/reference_manual/distributed.html)
+  This task creates a "magic cookie" for the Erlang node 
+  (see the "Security" section at http://erlang.org/doc/reference_manual/distributed.html)
 
-  Once the cookie has been created from the string passed in, the cookie will be output to a file .erlang_cookie within
-  the top-level directory of this project. 
+  Once the cookie has been created, it will be output to a file .erlang_cookie within the top-level directory of this project. 
 
   The cookie created by this task (it should be in the .erlang_cookie file) should then be exported as an environment 
   variable called ERLANG_COOKIE both locally and on the remote server.
